@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`basic from plain content 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "doc": Object {
+            "description": "",
+            "tags": Array [
+              Object {
+                "name": "a",
+                "tagName": "param",
+                "text": "a",
+                "typeExpression": "number",
+              },
+              Object {
+                "name": "b",
+                "tagName": "param",
+                "text": "b",
+                "typeExpression": "number",
+              },
+              Object {
+                "name": undefined,
+                "tagName": "returns",
+                "text": undefined,
+                "typeExpression": "number",
+              },
+            ],
+          },
+          "isDefaultExport": false,
+          "isExported": false,
+          "name": "sum",
+          "parameters": Array [
+            Object {
+              "initializer": undefined,
+              "isReadOnly": false,
+              "isRestParameter": false,
+              "name": "a",
+              "type": "Parameter",
+              "valueType": "number",
+            },
+            Object {
+              "initializer": undefined,
+              "isReadOnly": false,
+              "isRestParameter": false,
+              "name": "b",
+              "type": "Parameter",
+              "valueType": "number",
+            },
+          ],
+          "type": "FunctionDeclaration",
+          "valueType": "number",
+        },
+      ],
+      "doc": Object {
+        "description": "",
+        "tags": Array [],
+      },
+      "name": "index.js",
+      "path": "/home/tincho/projects/geut/jsdast/index.js",
+      "type": "Module",
+    },
+  ],
+  "type": "Root",
+}
+`;
+
+exports[`basic from vfile 1`] = `
+Object {
+  "children": Array [],
+  "type": "Root",
+}
+`;
