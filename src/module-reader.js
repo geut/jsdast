@@ -3,6 +3,7 @@
 
 const assert = require('assert')
 const { Project, StructureKind } = require('ts-morph')
+const pascalcase = require('pascalcase')
 
 const { parseTextTag, getName, pushTag, moduleTags } = require('./tsmorph-utils')
 
@@ -31,7 +32,7 @@ class ModuleFile {
 
   get name () {
     const tagModule = this.doc && this.doc.getTags().find(t => t.getTagName() === 'module')
-    return tagModule ? parseTextTag(tagModule) : this.sourceFile.getBaseName()
+    return tagModule ? parseTextTag(tagModule) : pascalcase(this.sourceFile.getBaseName().split('.').slice(0, -1).join('.'))
   }
 
   get description () {
