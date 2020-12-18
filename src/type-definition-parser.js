@@ -52,7 +52,7 @@ class TypeDefinitionParser {
 
         switch (statement.getKind()) {
           case SyntaxKind.TypeAliasDeclaration:
-            return this._renderTypeAliasDeclaration(statement.getTypeNode())
+            return this._renderTypeAliasDeclaration(statement.getTypeNode(), props)
           case SyntaxKind.VariableStatement:
             props.kind = statement.getDeclarationKind()
             props.declarations = statement.getDeclarations().map(this._renderDeclaration)
@@ -75,8 +75,7 @@ class TypeDefinitionParser {
       })
   }
 
-  _renderTypeAliasDeclaration (node) {
-    const props = {}
+  _renderTypeAliasDeclaration (node, props) {
     let children
 
     switch (node.getKind()) {

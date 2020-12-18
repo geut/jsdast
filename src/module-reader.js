@@ -80,8 +80,9 @@ class ModuleFile {
       const splitted = st.text.split('\n@')
       pushTag(newDoc, { tagName: tag.getTagName(), text: splitted.shift() })
       splitted.forEach(tagUnformatted => {
-        const [tagName, text] = tagUnformatted.split(' ')
-        pushTag(newDoc, { tagName, text })
+        const values = tagUnformatted.split(' ')
+        const tagName = values.shift()
+        pushTag(newDoc, { tagName, text: values.join(' ') })
       })
     })
 

@@ -68,7 +68,508 @@ Object {
 
 exports[`basic from vfile 1`] = `
 Object {
-  "children": Array [],
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "doc": Object {
+            "description": "This is a callback example",
+            "tags": Array [
+              Object {
+                "name": "age",
+                "tagName": "param",
+                "text": "Set the age",
+                "typeExpression": "number",
+              },
+              Object {
+                "name": undefined,
+                "tagName": "returns",
+                "text": undefined,
+                "typeExpression": "Human",
+              },
+              Object {
+                "name": undefined,
+                "tagName": "callback",
+                "text": "createHumanCallback",
+                "typeExpression": undefined,
+              },
+            ],
+          },
+          "isDefaultExport": false,
+          "isExported": true,
+          "name": "createHumanCallback",
+          "parameters": Array [
+            Object {
+              "initializer": undefined,
+              "isReadOnly": false,
+              "isRestParameter": false,
+              "name": "age",
+              "type": "Parameter",
+              "valueType": "number",
+            },
+          ],
+          "type": "FunctionType",
+          "valueType": "Human",
+        },
+        Object {
+          "children": Array [
+            Object {
+              "doc": Object {
+                "description": "some a description",
+                "tags": Array [],
+              },
+              "initializer": undefined,
+              "isReadOnly": false,
+              "name": "a",
+              "type": "PropertySignature",
+              "valueType": "string",
+            },
+            Object {
+              "doc": undefined,
+              "initializer": undefined,
+              "isReadOnly": false,
+              "name": "b",
+              "type": "PropertySignature",
+              "valueType": "number",
+            },
+          ],
+          "doc": Object {
+            "description": "This is a typedef example",
+            "tags": Array [
+              Object {
+                "name": undefined,
+                "tagName": "type",
+                "text": undefined,
+                "typeExpression": "Object",
+              },
+              Object {
+                "name": undefined,
+                "tagName": "prop",
+                "text": "options.a some a description",
+                "typeExpression": "string",
+              },
+              Object {
+                "name": undefined,
+                "tagName": "prop",
+                "text": "options.b",
+                "typeExpression": "number",
+              },
+              Object {
+                "name": undefined,
+                "tagName": "typedef",
+                "text": "options",
+                "typeExpression": undefined,
+              },
+            ],
+          },
+          "isDefaultExport": false,
+          "isExported": true,
+          "name": "options",
+          "type": "TypeLiteral",
+        },
+        Object {
+          "children": Array [
+            Object {
+              "doc": Object {
+                "description": "",
+                "tags": Array [
+                  Object {
+                    "name": undefined,
+                    "tagName": "constructor",
+                    "text": undefined,
+                    "typeExpression": undefined,
+                  },
+                  Object {
+                    "name": "name",
+                    "tagName": "param",
+                    "text": "- Set a name",
+                    "typeExpression": "string",
+                  },
+                  Object {
+                    "name": "age",
+                    "tagName": "param",
+                    "text": "Set the age",
+                    "typeExpression": "number",
+                  },
+                ],
+              },
+              "parameters": Array [
+                Object {
+                  "initializer": undefined,
+                  "isReadOnly": false,
+                  "isRestParameter": false,
+                  "name": "name",
+                  "type": "Parameter",
+                  "valueType": "string",
+                },
+                Object {
+                  "initializer": undefined,
+                  "isReadOnly": false,
+                  "isRestParameter": false,
+                  "name": "age",
+                  "type": "Parameter",
+                  "valueType": "number",
+                },
+              ],
+              "type": "Constructor",
+              "valueType": undefined,
+            },
+            Object {
+              "doc": undefined,
+              "initializer": undefined,
+              "isReadOnly": false,
+              "name": "_name",
+              "type": "PropertyDeclaration",
+              "valueType": "string",
+            },
+            Object {
+              "doc": undefined,
+              "initializer": undefined,
+              "isReadOnly": false,
+              "name": "_age",
+              "type": "PropertyDeclaration",
+              "valueType": "number",
+            },
+            Object {
+              "doc": Object {
+                "description": "",
+                "tags": Array [
+                  Object {
+                    "name": undefined,
+                    "tagName": "prop",
+                    "text": undefined,
+                    "typeExpression": "string",
+                  },
+                ],
+              },
+              "isAbstract": false,
+              "isStatic": false,
+              "name": "name",
+              "parameters": Array [],
+              "type": "GetAccessor",
+              "valueType": "string",
+            },
+            Object {
+              "doc": undefined,
+              "isAbstract": false,
+              "isStatic": false,
+              "name": "age",
+              "parameters": Array [],
+              "type": "GetAccessor",
+              "valueType": "number",
+            },
+            Object {
+              "docs": undefined,
+              "isAbstract": false,
+              "isAsync": false,
+              "isGenerator": false,
+              "isStatic": false,
+              "name": "sayHello",
+              "parameters": Array [],
+              "type": "MethodDeclaration",
+              "valueType": "string",
+            },
+          ],
+          "doc": Object {
+            "description": "",
+            "tags": Array [
+              Object {
+                "name": undefined,
+                "tagName": "example",
+                "text": "const human = new Human('pepe', 20)
+console.log(human.age)",
+                "typeExpression": undefined,
+              },
+              Object {
+                "name": undefined,
+                "tagName": "description",
+                "text": "eso es",
+                "typeExpression": undefined,
+              },
+            ],
+          },
+          "extends": undefined,
+          "isDefaultExport": false,
+          "isExported": true,
+          "name": "Human",
+          "type": "ClassDeclaration",
+        },
+        Object {
+          "doc": Object {
+            "description": "It's a human factory",
+            "tags": Array [
+              Object {
+                "name": "name",
+                "tagName": "param",
+                "text": "Set a name",
+                "typeExpression": "string",
+              },
+              Object {
+                "name": undefined,
+                "tagName": "returns",
+                "text": "a function",
+                "typeExpression": "createHumanCallback",
+              },
+            ],
+          },
+          "isDefaultExport": false,
+          "isExported": true,
+          "name": "humanFactory",
+          "parameters": Array [
+            Object {
+              "initializer": undefined,
+              "isReadOnly": false,
+              "isRestParameter": false,
+              "name": "name",
+              "type": "Parameter",
+              "valueType": "string",
+            },
+          ],
+          "type": "FunctionDeclaration",
+          "valueType": "createHumanCallback",
+        },
+        Object {
+          "declarations": Array [
+            Object {
+              "name": "CONSTANT",
+              "type": "VariableDeclaration",
+              "valueType": "\\"test\\"",
+            },
+          ],
+          "doc": undefined,
+          "isDefaultExport": false,
+          "isExported": true,
+          "kind": "const",
+          "name": "CONSTANT",
+          "type": "VariableStatement",
+        },
+      ],
+      "doc": Object {
+        "description": "
+A library for building widgets.
+",
+        "tags": Array [
+          Object {
+            "name": undefined,
+            "tagName": "remarks",
+            "text": "The \`widget-lib\` defines the {@link IWidget} interface and {@link Widget} class,
+which are used to build widgets.",
+            "typeExpression": undefined,
+          },
+          Object {
+            "name": undefined,
+            "tagName": "packageDocumentation",
+            "text": undefined,
+            "typeExpression": undefined,
+          },
+        ],
+      },
+      "name": "human.js",
+      "type": "Module",
+    },
+    Object {
+      "children": Array [
+        Object {
+          "children": Array [
+            Object {
+              "doc": Object {
+                "description": "",
+                "tags": Array [
+                  Object {
+                    "name": undefined,
+                    "tagName": "constructor",
+                    "text": undefined,
+                    "typeExpression": undefined,
+                  },
+                  Object {
+                    "name": "name",
+                    "tagName": "param",
+                    "text": "name",
+                    "typeExpression": "string",
+                  },
+                ],
+              },
+              "parameters": Array [
+                Object {
+                  "initializer": undefined,
+                  "isReadOnly": false,
+                  "isRestParameter": false,
+                  "name": "name",
+                  "type": "Parameter",
+                  "valueType": "string",
+                },
+              ],
+              "type": "Constructor",
+              "valueType": undefined,
+            },
+            Object {
+              "doc": undefined,
+              "initializer": undefined,
+              "isReadOnly": false,
+              "name": "_name",
+              "type": "PropertyDeclaration",
+              "valueType": "string",
+            },
+            Object {
+              "doc": Object {
+                "description": "",
+                "tags": Array [
+                  Object {
+                    "name": undefined,
+                    "tagName": "prop",
+                    "text": undefined,
+                    "typeExpression": "string",
+                  },
+                ],
+              },
+              "isAbstract": false,
+              "isStatic": false,
+              "name": "name",
+              "parameters": Array [],
+              "type": "GetAccessor",
+              "valueType": "string",
+            },
+          ],
+          "doc": undefined,
+          "extends": undefined,
+          "isDefaultExport": false,
+          "isExported": true,
+          "name": "Power",
+          "type": "ClassDeclaration",
+        },
+      ],
+      "doc": Object {
+        "description": "",
+        "tags": Array [],
+      },
+      "name": "power.js",
+      "type": "Module",
+    },
+    Object {
+      "children": Array [
+        Object {
+          "doc": undefined,
+          "isDefaultExport": false,
+          "isExported": true,
+          "name": "Power",
+          "type": "ImportType",
+        },
+        Object {
+          "children": Array [
+            Object {
+              "doc": undefined,
+              "parameters": Array [
+                Object {
+                  "initializer": undefined,
+                  "isReadOnly": false,
+                  "isRestParameter": false,
+                  "name": "name",
+                  "type": "Parameter",
+                  "valueType": "string",
+                },
+                Object {
+                  "initializer": undefined,
+                  "isReadOnly": false,
+                  "isRestParameter": false,
+                  "name": "age",
+                  "type": "Parameter",
+                  "valueType": "number",
+                },
+              ],
+              "type": "Constructor",
+              "valueType": undefined,
+            },
+            Object {
+              "doc": undefined,
+              "initializer": undefined,
+              "isReadOnly": false,
+              "name": "_power",
+              "type": "PropertyDeclaration",
+              "valueType": "typeof import(\\"./power\\")",
+            },
+            Object {
+              "docs": Object {
+                "description": "Set a power",
+                "tags": Array [
+                  Object {
+                    "name": "power",
+                    "tagName": "param",
+                    "text": "power",
+                    "typeExpression": "Power",
+                  },
+                  Object {
+                    "name": undefined,
+                    "tagName": "returns",
+                    "text": undefined,
+                    "typeExpression": "Mutan",
+                  },
+                ],
+              },
+              "isAbstract": false,
+              "isAsync": false,
+              "isGenerator": false,
+              "isStatic": false,
+              "name": "setPower",
+              "parameters": Array [
+                Object {
+                  "initializer": undefined,
+                  "isReadOnly": false,
+                  "isRestParameter": false,
+                  "name": "power",
+                  "type": "Parameter",
+                  "valueType": "Power",
+                },
+              ],
+              "type": "MethodDeclaration",
+              "valueType": "any",
+            },
+            Object {
+              "docs": Object {
+                "description": "",
+                "tags": Array [
+                  Object {
+                    "name": undefined,
+                    "tagName": "returns",
+                    "text": undefined,
+                    "typeExpression": "Power",
+                  },
+                ],
+              },
+              "isAbstract": false,
+              "isAsync": false,
+              "isGenerator": false,
+              "isStatic": false,
+              "name": "getPower",
+              "parameters": Array [],
+              "type": "MethodDeclaration",
+              "valueType": "Power",
+            },
+          ],
+          "doc": undefined,
+          "extends": "Human",
+          "isDefaultExport": false,
+          "isExported": true,
+          "name": "Mutant",
+          "type": "ClassDeclaration",
+        },
+      ],
+      "doc": Object {
+        "description": "",
+        "tags": Array [],
+      },
+      "name": "mutant.js",
+      "type": "Module",
+    },
+    Object {
+      "children": Array [],
+      "doc": Object {
+        "description": "",
+        "tags": Array [],
+      },
+      "name": "index.js",
+      "type": "Module",
+    },
+  ],
   "type": "Root",
 }
 `;

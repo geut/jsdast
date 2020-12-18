@@ -4,7 +4,7 @@ const toVFile = require('to-vfile')
 const jsdastParser = require('..')
 
 test('basic from vfile', () => {
-  const tree = unified().use(jsdastParser).parse(toVFile('./example/index.js'))
+  const tree = unified().use(jsdastParser).parse(toVFile('./tests/example/index.js'))
 
   for (const node of tree.children) {
     delete node.path
