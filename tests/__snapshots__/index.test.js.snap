@@ -305,7 +305,7 @@ Object {
               "valueType": "number",
             },
             Object {
-              "docs": undefined,
+              "doc": undefined,
               "isAbstract": false,
               "isAsync": false,
               "isGenerator": false,
@@ -541,7 +541,7 @@ which are used to build widgets.",
               "valueType": "typeof import(\\"./power\\")",
             },
             Object {
-              "docs": Object {
+              "doc": Object {
                 "description": "Set a power",
                 "tags": Array [
                   Object {
@@ -580,7 +580,7 @@ which are used to build widgets.",
               "valueType": "any",
             },
             Object {
-              "docs": Object {
+              "doc": Object {
                 "description": undefined,
                 "tags": Array [
                   Object {

@@ -153,7 +153,7 @@ class TypeDefinitionParser {
       name: st.name,
       parameters: node.getParameters().map(this._renderParameter),
       valueType: st.returnType,
-      docs: getJsDocStructure(node),
+      doc: getJsDocStructure(node),
       isGenerator: st.isGenerator,
       isAsync: st.isAsync,
       isStatic: st.isStatic,
