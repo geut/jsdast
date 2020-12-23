@@ -65,6 +65,7 @@ class TypeDefinitionParser {
               ...statement.getConstructors().map(this._renderConstructor.bind(this)),
               ...statement.getProperties().map(this._renderProperty.bind(this)),
               ...statement.getGetAccessors().map(this._renderAccessor.bind(this)),
+              ...statement.getSetAccessors().map(this._renderAccessor.bind(this)),
               ...statement.getMethods().map(this._renderMethod.bind(this))
             ]
         }
@@ -133,12 +134,15 @@ class TypeDefinitionParser {
 
   _renderAccessor (node) {
     const st = node.getStructure()
+    let valueType = node.getParameters()[0]
+    if (valueType) {
+      valueType = valueType.getStructure().type
+    }
     return u(node.getKindName(), {
       name: st.name,
-      parameters: node.getParameters().map(this._renderParameter),
       isAbstract: st.isAbstract,
       isStatic: st.isStatic,
-      valueType: st.returnType,
+      valueType: valueType || st.returnType,
       doc: getJsDocStructure(node)
     })
   }

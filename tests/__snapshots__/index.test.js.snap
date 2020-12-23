@@ -7,21 +7,26 @@ Object {
       "children": Array [
         Object {
           "doc": Object {
-            "description": "",
+            "description": undefined,
             "tags": Array [
               Object {
+                "fullText": "@param {number} a
+ * ",
                 "name": "a",
                 "tagName": "param",
                 "text": "a",
                 "typeExpression": "number",
               },
               Object {
+                "fullText": "@param {number} b
+ * ",
                 "name": "b",
                 "tagName": "param",
                 "text": "b",
                 "typeExpression": "number",
               },
               Object {
+                "fullText": "@returns {number}",
                 "name": undefined,
                 "tagName": "returns",
                 "text": undefined,
@@ -76,18 +81,23 @@ Object {
             "description": "This is a callback example",
             "tags": Array [
               Object {
+                "fullText": "@param {number} age Set the age
+ * ",
                 "name": "age",
                 "tagName": "param",
                 "text": "Set the age",
                 "typeExpression": "number",
               },
               Object {
+                "fullText": "@returns {Human}",
                 "name": undefined,
                 "tagName": "returns",
                 "text": undefined,
                 "typeExpression": "Human",
               },
               Object {
+                "fullText": "@callback createHumanCallback
+ ",
                 "name": undefined,
                 "tagName": "callback",
                 "text": "createHumanCallback",
@@ -137,24 +147,28 @@ Object {
             "description": "This is a typedef example",
             "tags": Array [
               Object {
+                "fullText": "@type {Object}",
                 "name": undefined,
                 "tagName": "type",
                 "text": undefined,
                 "typeExpression": "Object",
               },
               Object {
+                "fullText": "@prop ",
                 "name": undefined,
                 "tagName": "prop",
                 "text": "options.a some a description",
                 "typeExpression": "string",
               },
               Object {
+                "fullText": "@prop ",
                 "name": undefined,
                 "tagName": "prop",
                 "text": "options.b",
                 "typeExpression": "number",
               },
               Object {
+                "fullText": "@typedef options",
                 "name": undefined,
                 "tagName": "typedef",
                 "text": "options",
@@ -171,21 +185,27 @@ Object {
           "children": Array [
             Object {
               "doc": Object {
-                "description": "",
+                "description": undefined,
                 "tags": Array [
                   Object {
+                    "fullText": "@constructor
+     * ",
                     "name": undefined,
                     "tagName": "constructor",
                     "text": undefined,
                     "typeExpression": undefined,
                   },
                   Object {
+                    "fullText": "@param {string} name - Set a name
+     * ",
                     "name": "name",
                     "tagName": "param",
                     "text": "- Set a name",
                     "typeExpression": "string",
                   },
                   Object {
+                    "fullText": "@param {number} age Set the age
+     ",
                     "name": "age",
                     "tagName": "param",
                     "text": "Set the age",
@@ -232,9 +252,29 @@ Object {
             },
             Object {
               "doc": Object {
-                "description": "",
+                "description": undefined,
                 "tags": Array [
                   Object {
+                    "fullText": "@private",
+                    "name": undefined,
+                    "tagName": "private",
+                    "text": undefined,
+                    "typeExpression": undefined,
+                  },
+                ],
+              },
+              "initializer": undefined,
+              "isReadOnly": false,
+              "name": "_aPrivateMethod",
+              "type": "PropertyDeclaration",
+              "valueType": undefined,
+            },
+            Object {
+              "doc": Object {
+                "description": undefined,
+                "tags": Array [
+                  Object {
+                    "fullText": "@prop ",
                     "name": undefined,
                     "tagName": "prop",
                     "text": undefined,
@@ -245,7 +285,6 @@ Object {
               "isAbstract": false,
               "isStatic": false,
               "name": "name",
-              "parameters": Array [],
               "type": "GetAccessor",
               "valueType": "string",
             },
@@ -254,8 +293,15 @@ Object {
               "isAbstract": false,
               "isStatic": false,
               "name": "age",
-              "parameters": Array [],
               "type": "GetAccessor",
+              "valueType": "number",
+            },
+            Object {
+              "doc": undefined,
+              "isAbstract": false,
+              "isStatic": false,
+              "name": "age",
+              "type": "SetAccessor",
               "valueType": "number",
             },
             Object {
@@ -271,9 +317,11 @@ Object {
             },
           ],
           "doc": Object {
-            "description": "",
+            "description": undefined,
             "tags": Array [
               Object {
+                "fullText": "@example
+ * ",
                 "name": undefined,
                 "tagName": "example",
                 "text": "const human = new Human('pepe', 20)
@@ -281,6 +329,7 @@ console.log(human.age)",
                 "typeExpression": undefined,
               },
               Object {
+                "fullText": "@description ",
                 "name": undefined,
                 "tagName": "description",
                 "text": "eso es",
@@ -299,12 +348,15 @@ console.log(human.age)",
             "description": "It's a human factory",
             "tags": Array [
               Object {
+                "fullText": "@param {string} name Set a name
+ * ",
                 "name": "name",
                 "tagName": "param",
                 "text": "Set a name",
                 "typeExpression": "string",
               },
               Object {
+                "fullText": "@returns {createHumanCallback}",
                 "name": undefined,
                 "tagName": "returns",
                 "text": "a function",
@@ -344,6 +396,8 @@ A library for building widgets.
 ",
         "tags": Array [
           Object {
+            "fullText": "@remarks
+ * ",
             "name": undefined,
             "tagName": "remarks",
             "text": "The \`widget-lib\` defines the {@link IWidget} interface and {@link Widget} class,
@@ -351,6 +405,7 @@ which are used to build widgets.",
             "typeExpression": undefined,
           },
           Object {
+            "fullText": "@packageDocumentation",
             "name": undefined,
             "tagName": "packageDocumentation",
             "text": undefined,
@@ -367,15 +422,19 @@ which are used to build widgets.",
           "children": Array [
             Object {
               "doc": Object {
-                "description": "",
+                "description": undefined,
                 "tags": Array [
                   Object {
+                    "fullText": "@constructor
+     * ",
                     "name": undefined,
                     "tagName": "constructor",
                     "text": undefined,
                     "typeExpression": undefined,
                   },
                   Object {
+                    "fullText": "@param {string} name
+     ",
                     "name": "name",
                     "tagName": "param",
                     "text": "name",
@@ -406,9 +465,10 @@ which are used to build widgets.",
             },
             Object {
               "doc": Object {
-                "description": "",
+                "description": undefined,
                 "tags": Array [
                   Object {
+                    "fullText": "@prop ",
                     "name": undefined,
                     "tagName": "prop",
                     "text": undefined,
@@ -419,7 +479,6 @@ which are used to build widgets.",
               "isAbstract": false,
               "isStatic": false,
               "name": "name",
-              "parameters": Array [],
               "type": "GetAccessor",
               "valueType": "string",
             },
@@ -486,12 +545,15 @@ which are used to build widgets.",
                 "description": "Set a power",
                 "tags": Array [
                   Object {
+                    "fullText": "@param {Power} power
+     * ",
                     "name": "power",
                     "tagName": "param",
                     "text": "power",
                     "typeExpression": "Power",
                   },
                   Object {
+                    "fullText": "@returns {Mutan}",
                     "name": undefined,
                     "tagName": "returns",
                     "text": undefined,
@@ -519,9 +581,10 @@ which are used to build widgets.",
             },
             Object {
               "docs": Object {
-                "description": "",
+                "description": undefined,
                 "tags": Array [
                   Object {
+                    "fullText": "@returns {Power}",
                     "name": undefined,
                     "tagName": "returns",
                     "text": undefined,

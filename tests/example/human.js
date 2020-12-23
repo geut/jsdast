@@ -63,9 +63,18 @@ class Human {
     return this._age
   }
 
+  set age (val) {
+    this._age = val
+  }
+
   sayHello () {
     return this._name
   }
+
+  /**
+   * @private
+   */
+  _aPrivateMethod () {}
 }
 
 const CONSTANT = 'test'

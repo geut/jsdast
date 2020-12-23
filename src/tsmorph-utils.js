@@ -31,6 +31,7 @@ const parseTags = (tag) => {
     tagName: tag.getTagName(),
     name: tag.getName ? tag.getName() : undefined,
     text: text && text.length > 0 ? trim(text, '\n ') : undefined,
+    fullText: tag.getFullText(),
     typeExpression
   }
 }
@@ -56,9 +57,9 @@ const getJsDoc = (node) => {
 const getJsDocStructure = (node) => {
   const doc = getJsDoc(node)
   if (!doc) return
-
+  const description = trim(doc.getDescription(), '\n ')
   return {
-    description: trim(doc.getDescription(), '\n '),
+    description: description.length > 0 ? description : undefined,
     tags: doc.getTags().map(parseTags)
   }
 }
