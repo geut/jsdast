@@ -54,9 +54,7 @@ class TypeDefinitionParser {
           case SyntaxKind.TypeAliasDeclaration:
             return this._renderTypeAliasDeclaration(statement.getTypeNode(), props)
           case SyntaxKind.VariableStatement:
-            props.kind = statement.getDeclarationKind()
-            props.declarations = statement.getDeclarations().map(this._renderDeclaration)
-            break
+            return this._renderDeclaration(statement, props)
           case SyntaxKind.FunctionDeclaration:
             props.valueType = structure.returnType
             props.parameters = statement.getParameters().map(this._renderParameter)
@@ -104,12 +102,13 @@ class TypeDefinitionParser {
     })
   }
 
-  _renderDeclaration (node) {
-    const st = node.getStructure()
-    return u(node.getKindName(), {
-      name: st.name,
-      valueType: st.type
-    })
+  _renderDeclaration (node, props) {
+    props.kind = node.getDeclarationKind()
+    const dec = node.getDeclarations()[0]
+    const st = dec.getStructure()
+    props.name = st.name
+    props.valueType = st.type
+    return u(dec.getKindName(), props)
   }
 
   _renderProperty (node) {

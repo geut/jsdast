@@ -329,19 +329,13 @@ console.log(human.age)",
           "valueType": "createHumanCallback",
         },
         Object {
-          "declarations": Array [
-            Object {
-              "name": "CONSTANT",
-              "type": "VariableDeclaration",
-              "valueType": "\\"test\\"",
-            },
-          ],
           "doc": undefined,
           "isDefaultExport": false,
           "isExported": true,
           "kind": "const",
           "name": "CONSTANT",
-          "type": "VariableStatement",
+          "type": "VariableDeclaration",
+          "valueType": "\\"test\\"",
         },
       ],
       "doc": Object {
