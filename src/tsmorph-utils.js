@@ -20,16 +20,21 @@ const parseTags = (tag) => {
   if (text && !moduleTags.includes(structure.tagName) && structure.tagName !== 'example') {
     const matches = text.match(typeRegex)
     if (matches) {
-      text = text.replace(matches[0], '')
+      text = text.replace(matches[0], '').trim()
       if (!typeExpression) {
         typeExpression = matches[1]
       }
     }
   }
 
+  const name = tag.getName && tag.getName()
+  if (name === text) {
+    text = undefined
+  }
+
   return {
     tagName: tag.getTagName(),
-    name: tag.getName ? tag.getName() : undefined,
+    name,
     text: text && text.length > 0 ? trim(text, '\n ') : undefined,
     fullText: tag.getFullText(),
     typeExpression

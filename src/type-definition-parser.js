@@ -68,10 +68,13 @@ class TypeDefinitionParser {
               ...statement.getSetAccessors().map(this._renderAccessor.bind(this)),
               ...statement.getMethods().map(this._renderMethod.bind(this))
             ]
+            break
+          default:
+            return null
         }
 
         return u(statement.getKindName(), props, children)
-      })
+      }).filter(Boolean)
   }
 
   _renderTypeAliasDeclaration (node, props) {
@@ -87,6 +90,9 @@ class TypeDefinitionParser {
           ...node.getMethods().map(this._renderMethod),
           ...node.getProperties().map(this._renderProperty)
         ]
+        break
+      default:
+        return null
     }
 
     return u(node.getKindName(), props, children)

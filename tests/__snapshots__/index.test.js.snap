@@ -14,7 +14,7 @@ Object {
  * ",
                 "name": "a",
                 "tagName": "param",
-                "text": "a",
+                "text": undefined,
                 "typeExpression": "number",
               },
               Object {
@@ -22,7 +22,7 @@ Object {
  * ",
                 "name": "b",
                 "tagName": "param",
-                "text": "b",
+                "text": undefined,
                 "typeExpression": "number",
               },
               Object {
@@ -196,11 +196,11 @@ Object {
                     "typeExpression": undefined,
                   },
                   Object {
-                    "fullText": "@param {string} name - Set a name
+                    "fullText": "@param {string} name Set a name
      * ",
                     "name": "name",
                     "tagName": "param",
-                    "text": "- Set a name",
+                    "text": "Set a name",
                     "typeExpression": "string",
                   },
                   Object {
@@ -303,6 +303,61 @@ Object {
               "name": "age",
               "type": "SetAccessor",
               "valueType": "number",
+            },
+            Object {
+              "doc": Object {
+                "description": "Static factory constructor",
+                "tags": Array [
+                  Object {
+                    "fullText": "@param {string} name Set a name
+     * ",
+                    "name": "name",
+                    "tagName": "param",
+                    "text": "Set a name",
+                    "typeExpression": "string",
+                  },
+                  Object {
+                    "fullText": "@param {number} age
+     * ",
+                    "name": "age",
+                    "tagName": "param",
+                    "text": undefined,
+                    "typeExpression": "number",
+                  },
+                  Object {
+                    "fullText": "@returns {Human}",
+                    "name": undefined,
+                    "tagName": "returns",
+                    "text": undefined,
+                    "typeExpression": "Human",
+                  },
+                ],
+              },
+              "isAbstract": false,
+              "isAsync": false,
+              "isGenerator": false,
+              "isStatic": true,
+              "name": "create",
+              "parameters": Array [
+                Object {
+                  "initializer": undefined,
+                  "isReadOnly": false,
+                  "isRestParameter": false,
+                  "name": "name",
+                  "type": "Parameter",
+                  "valueType": "string",
+                },
+                Object {
+                  "initializer": undefined,
+                  "isReadOnly": false,
+                  "isRestParameter": false,
+                  "name": "age",
+                  "type": "Parameter",
+                  "valueType": "number",
+                },
+              ],
+              "type": "MethodDeclaration",
+              "valueType": "Human",
             },
             Object {
               "doc": undefined,
@@ -437,7 +492,7 @@ which are used to build widgets.",
      ",
                     "name": "name",
                     "tagName": "param",
-                    "text": "name",
+                    "text": undefined,
                     "typeExpression": "string",
                   },
                 ],
@@ -501,13 +556,6 @@ which are used to build widgets.",
     Object {
       "children": Array [
         Object {
-          "doc": undefined,
-          "isDefaultExport": false,
-          "isExported": true,
-          "name": "Power",
-          "type": "ImportType",
-        },
-        Object {
           "children": Array [
             Object {
               "doc": undefined,
@@ -549,7 +597,7 @@ which are used to build widgets.",
      * ",
                     "name": "power",
                     "tagName": "param",
-                    "text": "power",
+                    "text": undefined,
                     "typeExpression": "Power",
                   },
                   Object {

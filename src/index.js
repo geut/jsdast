@@ -16,4 +16,4 @@ function jsdastParser (options = {}) {
   }
 }
 
-module.exports = jsdastParser
+module.exports = { parser: jsdastParser, TypeDefinitionParser }

@@ -43,8 +43,19 @@ function humanFactory (name) {
  */
 class Human {
   /**
+   * Static factory constructor
+   *
+   * @param {string} name Set a name
+   * @param {number} age
+   * @returns {Human}
+   */
+  static create (name, age) {
+    return new Human(name, age)
+  }
+
+  /**
    * @constructor
-   * @param {string} name - Set a name
+   * @param {string} name Set a name
    * @param {number} age Set the age
    */
   constructor (name, age) {

@@ -1,10 +1,11 @@
 const unified = require('unified')
 const toVFile = require('to-vfile')
+const path = require('path')
 
-const jsdastParser = require('..')
+const { parser } = require('..')
 
 test('basic from vfile', () => {
-  const tree = unified().use(jsdastParser).parse(toVFile('./tests/example/index.js'))
+  const tree = unified().use(parser).parse(toVFile(path.join(__dirname, './example/index.js')))
 
   for (const node of tree.children) {
     delete node.path
@@ -14,7 +15,7 @@ test('basic from vfile', () => {
 })
 
 test('basic from plain content', () => {
-  const tree = unified().use(jsdastParser).parse(`
+  const tree = unified().use(parser).parse(`
 /**
  * @param {number} a
  * @param {number} b
