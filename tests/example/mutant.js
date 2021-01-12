@@ -1,4 +1,5 @@
-/** @typedef {import('./power')} Power */
+/** @typedef {import('./power').Power} Power */
+
 const { Human } = require('./human')
 
 class Mutant extends Human {

@@ -73,7 +73,7 @@ const getName = node => {
   }
 }
 
-function getInfoFromText (text, opts = {}) {
+const getInfoFromText = (text, opts = {}) => {
   const {
     isDefinitionFile = false,
     filePath = undefined,
@@ -101,4 +101,45 @@ function getJsDocFromText (text) {
   return { descendant: info.sourceFile.getFirstDescendantOrThrow(Node.isJSDocTag), ...info }
 }
 
-module.exports = { parseTextTag, parseTags, getJsDoc, getJsDocStructure, getName, moduleTags, getInfoFromText, getJsDocFromText }
+const getType = node => {
+  const st = node.getStructure()
+  const stType = node.getReturnType ? st.returnType : st.type
+  const { compilerType } = node.getReturnType ? node.getReturnType() : node.getType()
+  return compilerType.thisType ? compilerType.thisType.symbol.escapedName : stType
+}
+
+const isOptional = type => type.split('|').pop().trim() === 'null'
+
+const parseParameterType = (node, doc) => {
+  const type = typeof node === 'string' ? node : getType(node)
+
+  if (!doc) return { valueType: type, isOptional: isOptional(type) }
+
+  if (doc.fullText.includes(`} [${doc.name}]`)) {
+    return { valueType: `${type} | null`, isOptional: true }
+  }
+
+  const defaultValue = doc.fullText.match(new RegExp(`\\}\\s\\[${doc.name}=(\\s*.*)\\]`, 'i'))
+
+  if (defaultValue && defaultValue.length === 2) {
+    return { valueType: `${type} | ${defaultValue[1]}`, isOptional: true }
+  }
+
+  return { valueType: type, isOptional: isOptional(type) }
+}
+
+const removeDocParams = tag => !['param'].includes(tag.tagName)
+
+module.exports = {
+  parseTextTag,
+  parseTags,
+  getJsDoc,
+  getJsDocStructure,
+  getName,
+  moduleTags,
+  getInfoFromText,
+  getJsDocFromText,
+  getType,
+  parseParameterType,
+  removeDocParams
+}

@@ -3,27 +3,7 @@ const u = require('unist-builder')
 const trim = require('lodash.trim')
 
 const ModuleReader = require('./module-reader')
-const { parseTags, getJsDocStructure, getName, getJsDocFromText } = require('./tsmorph-utils')
-
-const isOptional = type => type.split('|').pop().trim() === 'null'
-
-const parseType = (type, doc) => {
-  if (!doc) return { valueType: type, isOptional: isOptional(type) }
-
-  if (doc.fullText.includes(`} [${doc.name}]`)) {
-    return { valueType: `${type} | null`, isOptional: true }
-  }
-
-  const defaultValue = doc.fullText.match(new RegExp(`\\}\\s\\[${doc.name}=(\\s*.*)\\]`, 'i'))
-
-  if (defaultValue && defaultValue.length === 2) {
-    return { valueType: `${type} | ${defaultValue[1]}`, isOptional: true }
-  }
-
-  return { valueType: type, isOptional: isOptional(type) }
-}
-
-const removeDocParams = tag => !['param'].includes(tag.tagName)
+const { parseTags, getJsDocStructure, getName, getJsDocFromText, getType, parseParameterType, removeDocParams } = require('./tsmorph-utils')
 
 class TypeDefinitionParser {
   constructor (opts = {}) {
@@ -137,7 +117,7 @@ class TypeDefinitionParser {
       doc = multipleObjectParameters[0]
 
       if (multipleObjectParameters.length > 1) {
-        typeInfo = parseType(doc.typeExpression, doc)
+        typeInfo = parseParameterType(doc.typeExpression, doc)
 
         children = multipleObjectParameters.slice(1).map(p => u('MultipleObjectParameter', {
           name: p.name.replace(`${doc.name}.`, ''),
@@ -145,11 +125,11 @@ class TypeDefinitionParser {
             description: p.text,
             tags: []
           },
-          ...parseType(p.typeExpression, p)
+          ...parseParameterType(p.typeExpression, p)
         }))
       }
     } else {
-      typeInfo = parseType(st.type, doc)
+      typeInfo = parseParameterType(node, doc)
     }
 
     return u(node.getKindName(), {
@@ -168,7 +148,7 @@ class TypeDefinitionParser {
     const dec = node.getDeclarations()[0]
     const st = dec.getStructure()
     props.name = st.name
-    props.valueType = st.type
+    props.valueType = getType(dec)
     return u(dec.getKindName(), props)
   }
 
@@ -176,31 +156,26 @@ class TypeDefinitionParser {
     const st = node.getStructure()
     return u(node.getKindName(), {
       name: st.name,
-      valueType: st.type,
+      valueType: getType(node),
       doc: getJsDocStructure(node, removeDocParams)
     })
   }
 
   _renderConstructor (node) {
-    const st = node.getStructure()
     return u(node.getKindName(), {
       parameters: node.getParameters().map(this._renderParameter),
-      valueType: st.returnType,
+      valueType: getType(node),
       doc: getJsDocStructure(node, removeDocParams)
     })
   }
 
   _renderAccessor (node) {
     const st = node.getStructure()
-    let valueType = node.getParameters()[0]
-    if (valueType) {
-      valueType = valueType.getStructure().type
-    }
     return u(node.getKindName(), {
       name: st.name,
       isAbstract: st.isAbstract,
       isStatic: st.isStatic,
-      valueType: valueType || st.returnType,
+      valueType: getType(node),
       doc: getJsDocStructure(node, removeDocParams)
     })
   }
@@ -210,7 +185,7 @@ class TypeDefinitionParser {
     return u(node.getKindName(), {
       name: st.name,
       parameters: node.getParameters().map(this._renderParameter),
-      valueType: st.returnType,
+      valueType: getType(node),
       doc: getJsDocStructure(node, removeDocParams),
       isGenerator: st.isGenerator,
       isAsync: st.isAsync,
