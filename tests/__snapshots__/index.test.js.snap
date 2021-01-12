@@ -19,11 +19,11 @@ Object {
                 "description": undefined,
                 "tags": Array [],
               },
-              "isOptional": false,
+              "isOptional": true,
               "isRestParameter": false,
               "name": "a",
               "type": "Parameter",
-              "valueType": "string",
+              "valueType": "string | null",
             },
             Object {
               "children": Array [
@@ -91,11 +91,11 @@ Object {
                     "description": undefined,
                     "tags": Array [],
                   },
-                  "isOptional": false,
+                  "isOptional": true,
                   "isRestParameter": false,
                   "name": "a",
                   "type": "Parameter",
-                  "valueType": "string",
+                  "valueType": "string | null",
                 },
                 Object {
                   "children": Array [
@@ -369,7 +369,7 @@ Object {
                 },
               ],
               "type": "Constructor",
-              "valueType": undefined,
+              "valueType": "Human",
             },
             Object {
               "doc": undefined,
@@ -433,7 +433,7 @@ Object {
               "isStatic": false,
               "name": "age",
               "type": "SetAccessor",
-              "valueType": "number",
+              "valueType": undefined,
             },
             Object {
               "doc": Object {
@@ -619,7 +619,7 @@ which are used to build widgets.",
                 },
               ],
               "type": "Constructor",
-              "valueType": undefined,
+              "valueType": "Power",
             },
             Object {
               "doc": undefined,
@@ -693,13 +693,13 @@ which are used to build widgets.",
                 },
               ],
               "type": "Constructor",
-              "valueType": undefined,
+              "valueType": "Mutant",
             },
             Object {
               "doc": undefined,
               "name": "_power",
               "type": "PropertyDeclaration",
-              "valueType": "typeof import(\\"./power\\")",
+              "valueType": "Power",
             },
             Object {
               "doc": Object {
