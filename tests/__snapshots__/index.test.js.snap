@@ -1,5 +1,171 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`MultipleObjectParameter 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "doc": Object {
+            "description": undefined,
+            "tags": Array [],
+          },
+          "isDefaultExport": false,
+          "isExported": false,
+          "name": "test",
+          "parameters": Array [
+            Object {
+              "doc": Object {
+                "description": undefined,
+                "tags": Array [],
+              },
+              "isOptional": false,
+              "isRestParameter": false,
+              "name": "a",
+              "type": "Parameter",
+              "valueType": "string",
+            },
+            Object {
+              "children": Array [
+                Object {
+                  "doc": Object {
+                    "description": "name description",
+                    "tags": Array [],
+                  },
+                  "isOptional": true,
+                  "name": "name",
+                  "type": "MultipleObjectParameter",
+                  "valueType": "string | 'test'",
+                },
+                Object {
+                  "doc": Object {
+                    "description": "age description",
+                    "tags": Array [],
+                  },
+                  "isOptional": false,
+                  "name": "age",
+                  "type": "MultipleObjectParameter",
+                  "valueType": "number",
+                },
+              ],
+              "doc": Object {
+                "description": "a text description",
+                "tags": Array [],
+              },
+              "isOptional": false,
+              "isRestParameter": false,
+              "name": "opts",
+              "type": "Parameter",
+              "valueType": "object",
+            },
+            Object {
+              "doc": Object {
+                "description": undefined,
+                "tags": Array [],
+              },
+              "isOptional": false,
+              "isRestParameter": false,
+              "name": "b",
+              "type": "Parameter",
+              "valueType": "number",
+            },
+          ],
+          "type": "FunctionDeclaration",
+          "valueType": "string",
+        },
+        Object {
+          "children": Array [
+            Object {
+              "doc": Object {
+                "description": undefined,
+                "tags": Array [],
+              },
+              "isAbstract": false,
+              "isAsync": false,
+              "isGenerator": false,
+              "isStatic": false,
+              "name": "test",
+              "parameters": Array [
+                Object {
+                  "doc": Object {
+                    "description": undefined,
+                    "tags": Array [],
+                  },
+                  "isOptional": false,
+                  "isRestParameter": false,
+                  "name": "a",
+                  "type": "Parameter",
+                  "valueType": "string",
+                },
+                Object {
+                  "children": Array [
+                    Object {
+                      "doc": Object {
+                        "description": "name description",
+                        "tags": Array [],
+                      },
+                      "isOptional": true,
+                      "name": "name",
+                      "type": "MultipleObjectParameter",
+                      "valueType": "string | 'test'",
+                    },
+                    Object {
+                      "doc": Object {
+                        "description": "age description",
+                        "tags": Array [],
+                      },
+                      "isOptional": false,
+                      "name": "age",
+                      "type": "MultipleObjectParameter",
+                      "valueType": "number",
+                    },
+                  ],
+                  "doc": Object {
+                    "description": "a text description",
+                    "tags": Array [],
+                  },
+                  "isOptional": false,
+                  "isRestParameter": false,
+                  "name": "opts",
+                  "type": "Parameter",
+                  "valueType": "object",
+                },
+                Object {
+                  "doc": Object {
+                    "description": undefined,
+                    "tags": Array [],
+                  },
+                  "isOptional": false,
+                  "isRestParameter": false,
+                  "name": "b",
+                  "type": "Parameter",
+                  "valueType": "number",
+                },
+              ],
+              "type": "MethodDeclaration",
+              "valueType": "void",
+            },
+          ],
+          "doc": undefined,
+          "extends": undefined,
+          "isDefaultExport": false,
+          "isExported": false,
+          "name": "Test",
+          "type": "ClassDeclaration",
+        },
+      ],
+      "doc": Object {
+        "description": "",
+        "tags": Array [],
+      },
+      "name": "Index",
+      "type": "Module",
+    },
+  ],
+  "type": "Root",
+}
+`;
+
 exports[`basic from plain content 1`] = `
 Object {
   "children": Array [
@@ -9,22 +175,6 @@ Object {
           "doc": Object {
             "description": undefined,
             "tags": Array [
-              Object {
-                "fullText": "@param {number} a
- * ",
-                "name": "a",
-                "tagName": "param",
-                "text": undefined,
-                "typeExpression": "number",
-              },
-              Object {
-                "fullText": "@param {number} b
- * ",
-                "name": "b",
-                "tagName": "param",
-                "text": undefined,
-                "typeExpression": "number",
-              },
               Object {
                 "fullText": "@returns {number}",
                 "name": undefined,
@@ -39,16 +189,22 @@ Object {
           "name": "sum",
           "parameters": Array [
             Object {
-              "initializer": undefined,
-              "isReadOnly": false,
+              "doc": Object {
+                "description": undefined,
+                "tags": Array [],
+              },
+              "isOptional": false,
               "isRestParameter": false,
               "name": "a",
               "type": "Parameter",
               "valueType": "number",
             },
             Object {
-              "initializer": undefined,
-              "isReadOnly": false,
+              "doc": Object {
+                "description": undefined,
+                "tags": Array [],
+              },
+              "isOptional": false,
               "isRestParameter": false,
               "name": "b",
               "type": "Parameter",
@@ -81,14 +237,6 @@ Object {
             "description": "This is a callback example",
             "tags": Array [
               Object {
-                "fullText": "@param {number} age Set the age
- * ",
-                "name": "age",
-                "tagName": "param",
-                "text": "Set the age",
-                "typeExpression": "number",
-              },
-              Object {
                 "fullText": "@returns {Human}",
                 "name": undefined,
                 "tagName": "returns",
@@ -110,8 +258,11 @@ Object {
           "name": "createHumanCallback",
           "parameters": Array [
             Object {
-              "initializer": undefined,
-              "isReadOnly": false,
+              "doc": Object {
+                "description": undefined,
+                "tags": Array [],
+              },
+              "isOptional": false,
               "isRestParameter": false,
               "name": "age",
               "type": "Parameter",
@@ -128,16 +279,12 @@ Object {
                 "description": "some a description",
                 "tags": Array [],
               },
-              "initializer": undefined,
-              "isReadOnly": false,
               "name": "a",
               "type": "PropertySignature",
               "valueType": "string",
             },
             Object {
               "doc": undefined,
-              "initializer": undefined,
-              "isReadOnly": false,
               "name": "b",
               "type": "PropertySignature",
               "valueType": "number",
@@ -195,36 +342,26 @@ Object {
                     "text": undefined,
                     "typeExpression": undefined,
                   },
-                  Object {
-                    "fullText": "@param {string} name Set a name
-     * ",
-                    "name": "name",
-                    "tagName": "param",
-                    "text": "Set a name",
-                    "typeExpression": "string",
-                  },
-                  Object {
-                    "fullText": "@param {number} age Set the age
-     ",
-                    "name": "age",
-                    "tagName": "param",
-                    "text": "Set the age",
-                    "typeExpression": "number",
-                  },
                 ],
               },
               "parameters": Array [
                 Object {
-                  "initializer": undefined,
-                  "isReadOnly": false,
+                  "doc": Object {
+                    "description": "Set a name",
+                    "tags": Array [],
+                  },
+                  "isOptional": false,
                   "isRestParameter": false,
                   "name": "name",
                   "type": "Parameter",
                   "valueType": "string",
                 },
                 Object {
-                  "initializer": undefined,
-                  "isReadOnly": false,
+                  "doc": Object {
+                    "description": "Set the age",
+                    "tags": Array [],
+                  },
+                  "isOptional": false,
                   "isRestParameter": false,
                   "name": "age",
                   "type": "Parameter",
@@ -236,16 +373,12 @@ Object {
             },
             Object {
               "doc": undefined,
-              "initializer": undefined,
-              "isReadOnly": false,
               "name": "_name",
               "type": "PropertyDeclaration",
               "valueType": "string",
             },
             Object {
               "doc": undefined,
-              "initializer": undefined,
-              "isReadOnly": false,
               "name": "_age",
               "type": "PropertyDeclaration",
               "valueType": "number",
@@ -263,8 +396,6 @@ Object {
                   },
                 ],
               },
-              "initializer": undefined,
-              "isReadOnly": false,
               "name": "_aPrivateMethod",
               "type": "PropertyDeclaration",
               "valueType": undefined,
@@ -309,22 +440,6 @@ Object {
                 "description": "Static factory constructor",
                 "tags": Array [
                   Object {
-                    "fullText": "@param {string} name Set a name
-     * ",
-                    "name": "name",
-                    "tagName": "param",
-                    "text": "Set a name",
-                    "typeExpression": "string",
-                  },
-                  Object {
-                    "fullText": "@param {number} age
-     * ",
-                    "name": "age",
-                    "tagName": "param",
-                    "text": undefined,
-                    "typeExpression": "number",
-                  },
-                  Object {
                     "fullText": "@returns {Human}",
                     "name": undefined,
                     "tagName": "returns",
@@ -340,16 +455,22 @@ Object {
               "name": "create",
               "parameters": Array [
                 Object {
-                  "initializer": undefined,
-                  "isReadOnly": false,
+                  "doc": Object {
+                    "description": "Set a name",
+                    "tags": Array [],
+                  },
+                  "isOptional": false,
                   "isRestParameter": false,
                   "name": "name",
                   "type": "Parameter",
                   "valueType": "string",
                 },
                 Object {
-                  "initializer": undefined,
-                  "isReadOnly": false,
+                  "doc": Object {
+                    "description": undefined,
+                    "tags": Array [],
+                  },
+                  "isOptional": false,
                   "isRestParameter": false,
                   "name": "age",
                   "type": "Parameter",
@@ -403,14 +524,6 @@ console.log(human.age)",
             "description": "It's a human factory",
             "tags": Array [
               Object {
-                "fullText": "@param {string} name Set a name
- * ",
-                "name": "name",
-                "tagName": "param",
-                "text": "Set a name",
-                "typeExpression": "string",
-              },
-              Object {
                 "fullText": "@returns {createHumanCallback}",
                 "name": undefined,
                 "tagName": "returns",
@@ -424,8 +537,11 @@ console.log(human.age)",
           "name": "humanFactory",
           "parameters": Array [
             Object {
-              "initializer": undefined,
-              "isReadOnly": false,
+              "doc": Object {
+                "description": "Set a name",
+                "tags": Array [],
+              },
+              "isOptional": false,
               "isRestParameter": false,
               "name": "name",
               "type": "Parameter",
@@ -487,20 +603,15 @@ which are used to build widgets.",
                     "text": undefined,
                     "typeExpression": undefined,
                   },
-                  Object {
-                    "fullText": "@param {string} name
-     ",
-                    "name": "name",
-                    "tagName": "param",
-                    "text": undefined,
-                    "typeExpression": "string",
-                  },
                 ],
               },
               "parameters": Array [
                 Object {
-                  "initializer": undefined,
-                  "isReadOnly": false,
+                  "doc": Object {
+                    "description": undefined,
+                    "tags": Array [],
+                  },
+                  "isOptional": false,
                   "isRestParameter": false,
                   "name": "name",
                   "type": "Parameter",
@@ -512,8 +623,6 @@ which are used to build widgets.",
             },
             Object {
               "doc": undefined,
-              "initializer": undefined,
-              "isReadOnly": false,
               "name": "_name",
               "type": "PropertyDeclaration",
               "valueType": "string",
@@ -561,16 +670,22 @@ which are used to build widgets.",
               "doc": undefined,
               "parameters": Array [
                 Object {
-                  "initializer": undefined,
-                  "isReadOnly": false,
+                  "doc": Object {
+                    "description": undefined,
+                    "tags": Array [],
+                  },
+                  "isOptional": false,
                   "isRestParameter": false,
                   "name": "name",
                   "type": "Parameter",
                   "valueType": "string",
                 },
                 Object {
-                  "initializer": undefined,
-                  "isReadOnly": false,
+                  "doc": Object {
+                    "description": undefined,
+                    "tags": Array [],
+                  },
+                  "isOptional": false,
                   "isRestParameter": false,
                   "name": "age",
                   "type": "Parameter",
@@ -582,8 +697,6 @@ which are used to build widgets.",
             },
             Object {
               "doc": undefined,
-              "initializer": undefined,
-              "isReadOnly": false,
               "name": "_power",
               "type": "PropertyDeclaration",
               "valueType": "typeof import(\\"./power\\")",
@@ -592,14 +705,6 @@ which are used to build widgets.",
               "doc": Object {
                 "description": "Set a power",
                 "tags": Array [
-                  Object {
-                    "fullText": "@param {Power} power
-     * ",
-                    "name": "power",
-                    "tagName": "param",
-                    "text": undefined,
-                    "typeExpression": "Power",
-                  },
                   Object {
                     "fullText": "@returns {Mutan}",
                     "name": undefined,
@@ -616,8 +721,11 @@ which are used to build widgets.",
               "name": "setPower",
               "parameters": Array [
                 Object {
-                  "initializer": undefined,
-                  "isReadOnly": false,
+                  "doc": Object {
+                    "description": undefined,
+                    "tags": Array [],
+                  },
+                  "isOptional": false,
                   "isRestParameter": false,
                   "name": "power",
                   "type": "Parameter",

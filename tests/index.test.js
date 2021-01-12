@@ -32,3 +32,35 @@ function sum(a, b) {
 
   expect(tree).toMatchSnapshot()
 })
+
+test('MultipleObjectParameter', () => {
+  const tree = unified().use(parser).parse(`
+/**
+ * @param {string} [a]
+ * @param {object} opts a text description
+ * @param {string} [opts.name='test'] name description
+ * @param {number} opts.age age description
+ * @param {number} b
+ */
+function test(a, opts, b) {
+  return opts.name
+}
+
+class Test {
+  /**
+   * @param {string} [a]
+   * @param {object} opts a text description
+   * @param {string} [opts.name='test'] name description
+   * @param {number} opts.age age description
+   * @param {number} b
+   */
+  test(a, opts, b) {}
+}
+  `)
+
+  for (const node of tree.children) {
+    delete node.path
+  }
+
+  expect(tree).toMatchSnapshot()
+})

@@ -1,6 +1,6 @@
 const path = require('path')
 
-const { TypeDefinitionParser } = require('./type-definition-parser')
+const TypeDefinitionParser = require('./type-definition-parser')
 
 function jsdastParser (options = {}) {
   const { type = 'js', ...parserOptions } = options

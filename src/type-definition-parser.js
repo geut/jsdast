@@ -1,8 +1,29 @@
 const { SyntaxKind } = require('ts-morph')
 const u = require('unist-builder')
+const trim = require('lodash.trim')
 
-const { ModuleReader } = require('./module-reader')
-const { parseTags, getJsDocStructure, getName } = require('./tsmorph-utils')
+const ModuleReader = require('./module-reader')
+const { parseTags, getJsDocStructure, getName, getJsDocFromText } = require('./tsmorph-utils')
+
+const isOptional = type => type.split('|').pop().trim() === 'null'
+
+const parseType = (type, doc) => {
+  if (!doc) return { valueType: type, isOptional: isOptional(type) }
+
+  if (doc.fullText.includes(`} [${doc.name}]`)) {
+    return { valueType: `${type} | null`, isOptional: true }
+  }
+
+  const defaultValue = doc.fullText.match(new RegExp(`\\}\\s\\[${doc.name}=(\\s*.*)\\]`, 'i'))
+
+  if (defaultValue && defaultValue.length === 2) {
+    return { valueType: `${type} | ${defaultValue[1]}`, isOptional: true }
+  }
+
+  return { valueType: type, isOptional: isOptional(type) }
+}
+
+const removeDocParams = tag => !['param'].includes(tag.tagName)
 
 class TypeDefinitionParser {
   constructor (opts = {}) {
@@ -43,7 +64,7 @@ class TypeDefinitionParser {
 
         const props = {
           name: getName(statement),
-          doc: getJsDocStructure(statement),
+          doc: getJsDocStructure(statement, removeDocParams),
           isExported: structure.isExported,
           isDefaultExport: structure.isDefaultExport
         }
@@ -100,13 +121,46 @@ class TypeDefinitionParser {
 
   _renderParameter (node) {
     const st = node.getStructure()
+    const parentDoc = getJsDocStructure(node.getParent())
+    let doc = parentDoc && parentDoc.tags.find(t => t.tagName === 'param' && t.name === st.name)
+    let children = null
+    let typeInfo = null
+
+    if (doc && st.type.startsWith('{') && st.type.endsWith('}')) {
+      const multipleObjectParameters = doc.fullText
+        .split('@param')
+        .map(t => trim(t, '\n *'))
+        .filter(Boolean)
+        .map(t => getJsDocFromText(`/** @param ${t} */\nfunction test() {}`).descendant)
+        .map(t => parseTags(t))
+
+      doc = multipleObjectParameters[0]
+
+      if (multipleObjectParameters.length > 1) {
+        typeInfo = parseType(doc.typeExpression, doc)
+
+        children = multipleObjectParameters.slice(1).map(p => u('MultipleObjectParameter', {
+          name: p.name.replace(`${doc.name}.`, ''),
+          doc: {
+            description: p.text,
+            tags: []
+          },
+          ...parseType(p.typeExpression, p)
+        }))
+      }
+    } else {
+      typeInfo = parseType(st.type, doc)
+    }
+
     return u(node.getKindName(), {
       name: st.name,
-      initializer: st.initializer,
-      isReadOnly: st.isReadonly,
+      doc: {
+        description: doc && doc.text,
+        tags: []
+      },
       isRestParameter: st.isRestParameter,
-      valueType: st.type
-    })
+      ...typeInfo
+    }, children)
   }
 
   _renderDeclaration (node, props) {
@@ -122,10 +176,8 @@ class TypeDefinitionParser {
     const st = node.getStructure()
     return u(node.getKindName(), {
       name: st.name,
-      initializer: st.initializer,
-      isReadOnly: st.isReadonly,
       valueType: st.type,
-      doc: getJsDocStructure(node)
+      doc: getJsDocStructure(node, removeDocParams)
     })
   }
 
@@ -134,7 +186,7 @@ class TypeDefinitionParser {
     return u(node.getKindName(), {
       parameters: node.getParameters().map(this._renderParameter),
       valueType: st.returnType,
-      doc: getJsDocStructure(node)
+      doc: getJsDocStructure(node, removeDocParams)
     })
   }
 
@@ -149,7 +201,7 @@ class TypeDefinitionParser {
       isAbstract: st.isAbstract,
       isStatic: st.isStatic,
       valueType: valueType || st.returnType,
-      doc: getJsDocStructure(node)
+      doc: getJsDocStructure(node, removeDocParams)
     })
   }
 
@@ -159,7 +211,7 @@ class TypeDefinitionParser {
       name: st.name,
       parameters: node.getParameters().map(this._renderParameter),
       valueType: st.returnType,
-      doc: getJsDocStructure(node),
+      doc: getJsDocStructure(node, removeDocParams),
       isGenerator: st.isGenerator,
       isAsync: st.isAsync,
       isStatic: st.isStatic,
@@ -168,4 +220,4 @@ class TypeDefinitionParser {
   }
 }
 
-module.exports = { TypeDefinitionParser }
+module.exports = TypeDefinitionParser

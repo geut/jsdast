@@ -2,10 +2,11 @@
 /** @typedef {import('ts-morph').JSDoc} JSDoc */
 
 const assert = require('assert')
-const { Project, StructureKind } = require('ts-morph')
+const { Project } = require('ts-morph')
 const pascalcase = require('pascalcase')
 
-const { parseTextTag, getName, pushTag, moduleTags } = require('./tsmorph-utils')
+const { parseTextTag, moduleTags } = require('./tsmorph-utils')
+const realocateDocs = require('./realocate-docs')
 
 class ModuleFile {
   constructor (sourceFile, declarationFile) {
@@ -23,7 +24,7 @@ class ModuleFile {
       this.doc = documentation
     }
 
-    this._fixJsDocs()
+    realocateDocs(this.declarationFile)
   }
 
   get path () {
@@ -41,63 +42,6 @@ class ModuleFile {
 
   get tags () {
     return this.doc ? this.doc.getTags() : []
-  }
-
-  /**
-   * `callback` and `typedef` jsdoc definition are not correctly parse to the respective statement.
-   * This fix try to realocate the documentation to the correct statement.
-   */
-  _fixJsDocs () {
-    const statements = this.declarationFile.getStatements()
-
-    statements.forEach(node => {
-      // it has additional jsdoc definitions
-      const docs = node.getJsDocs && node.getJsDocs()
-      if (docs && docs.length > 1) {
-        const isolatedDocs = docs.slice(0, docs.length - 1)
-        isolatedDocs.forEach(doc => this._realocateDocStatements(statements, doc))
-      }
-    })
-  }
-
-  _realocateDocStatements (statements, doc) {
-    const description = doc.getDescription()
-    const newDoc = {
-      kind: StructureKind.JSDoc,
-      description: description && `\n${description}\n`,
-      tags: [],
-      endTags: []
-    }
-
-    const tags = doc.getTags()
-    tags.forEach(tag => {
-      const st = tag.getStructure()
-
-      if (!st.text || !st.text.includes('\n@')) {
-        pushTag(newDoc, { tagName: st.tagName, text: st.text })
-        return
-      }
-
-      const splitted = st.text.split('\n@')
-      pushTag(newDoc, { tagName: tag.getTagName(), text: splitted.shift() })
-      splitted.forEach(tagUnformatted => {
-        const values = tagUnformatted.split(' ')
-        const tagName = values.shift()
-        pushTag(newDoc, { tagName, text: values.join(' ') })
-      })
-    })
-
-    doc.remove()
-
-    newDoc.tags = newDoc.tags.concat(newDoc.endTags)
-
-    const tag = newDoc.tags.find(t => ['name', 'callback', 'typedef'].includes(t.tagName))
-    if (!tag) return
-
-    const st = statements.find(st => tag.text.includes(getName(st)))
-    if (st) {
-      st.addJsDoc(newDoc)
-    }
   }
 }
 
@@ -151,4 +95,4 @@ class ModuleReader {
   }
 }
 
-module.exports = { ModuleReader }
+module.exports = ModuleReader
