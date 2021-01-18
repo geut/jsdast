@@ -117,7 +117,7 @@ const parseParameterType = (node, doc) => {
   if (!doc) return { valueType: type, isOptional }
 
   if (doc.fullText.includes(`} [${doc.name}]`)) {
-    return { valueType: `${type} | null`, isOptional: true, defaultValue: 'null' }
+    return { valueType: `${type} | null`, isOptional: true }
   }
 
   const defaultValue = doc.fullText.match(new RegExp(`\\}\\s\\[${doc.name}=(\\s*.*)\\]`, 'i'))
@@ -126,7 +126,7 @@ const parseParameterType = (node, doc) => {
     return { valueType: `${type} | null`, isOptional: true, defaultValue: defaultValue[1] }
   }
 
-  return { valueType: type, isOptional, defaultValue: isOptional ? 'null' : undefined }
+  return { valueType: type, isOptional }
 }
 
 const removeDocParams = tag => !['param'].includes(tag.tagName)
