@@ -61,5 +61,8 @@
   "bugs": {
     "url": "https://github.com/geut/jsdast/issues"
   },
-  "homepage": "https://github.com/geut/jsdast#readme"
+  "homepage": "https://github.com/geut/jsdast#readme",
+  "publishConfig": {
+    "access": "public"
+  }
 }
