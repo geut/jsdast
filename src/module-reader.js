@@ -63,10 +63,12 @@ class ModuleReader {
     const project = new Project({
       ...this._opts,
       compilerOptions: {
+        exclude: ['node_modules'],
         ...(this._opts.compilerOptions || {}),
         allowJs: true,
         declaration: true,
-        esModuleInterop: true
+        esModuleInterop: true,
+        resolveJsonModule: true
       }
     })
 
