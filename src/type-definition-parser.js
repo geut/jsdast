@@ -8,22 +8,14 @@ const { parseTags, getJsDocStructure, getName, getJsDocFromText, getType, parseP
 class TypeDefinitionParser {
   constructor (opts = {}) {
     this._modules = new ModuleReader(opts)
-
-    this._renderAccessor = this._renderAccessor.bind(this)
-    this._renderConstructor = this._renderConstructor.bind(this)
-    this._renderDeclaration = this._renderDeclaration.bind(this)
-    this._renderMethod = this._renderMethod.bind(this)
-    this._renderParameter = this._renderParameter.bind(this)
-    this._renderProperty = this._renderProperty.bind(this)
-    this._renderTypeAliasDeclaration = this._renderTypeAliasDeclaration.bind(this)
   }
 
   run (src) {
     const modules = this._modules.read(src)
-    return u('Root', this._renderModules(modules))
+    return u('Root', this._parseModules(modules))
   }
 
-  _renderModules (modules) {
+  _parseModules (modules) {
     return modules.map(mod => {
       return u('Module', {
         name: mod.name,
@@ -32,11 +24,11 @@ class TypeDefinitionParser {
           description: mod.description,
           tags: mod.tags.map(parseTags)
         }
-      }, this._renderStatements(mod))
+      }, this._parseStatements(mod))
     })
   }
 
-  _renderStatements (mod) {
+  _parseStatements (mod) {
     return mod.declarationFile.getStatements()
       .filter(statement => ![SyntaxKind.ExportDeclaration, SyntaxKind.ImportDeclaration].includes(statement.getKind()))
       .map(statement => {
@@ -49,47 +41,35 @@ class TypeDefinitionParser {
           isDefaultExport: structure.isDefaultExport
         }
 
-        let children
-
         switch (statement.getKind()) {
           case SyntaxKind.TypeAliasDeclaration:
-            return this._renderTypeAliasDeclaration(statement.getTypeNode(), props)
+            return this._parseTypeAliasDeclaration(statement, props)
           case SyntaxKind.VariableStatement:
-            return this._renderDeclaration(statement, props)
+            return this._parseDeclaration(statement, props)
           case SyntaxKind.FunctionDeclaration:
-            props.valueType = structure.returnType
-            props.parameters = statement.getParameters().map(this._renderParameter)
-            break
+            return this._parseFunctionDeclaration(statement, props, mod)
           case SyntaxKind.ClassDeclaration:
-            props.extends = structure.extends
-            children = [
-              ...statement.getConstructors().map(this._renderConstructor.bind(this)),
-              ...statement.getProperties().map(this._renderProperty.bind(this)),
-              ...statement.getGetAccessors().map(this._renderAccessor.bind(this)),
-              ...statement.getSetAccessors().map(this._renderAccessor.bind(this)),
-              ...statement.getMethods().map(this._renderMethod.bind(this))
-            ]
-            break
+            return this._parseClassDeclaration(statement, props, mod)
           default:
             return null
         }
-
-        return u(statement.getKindName(), props, children)
       }).filter(Boolean)
   }
 
-  _renderTypeAliasDeclaration (node, props) {
+  _parseTypeAliasDeclaration (node, props) {
+    node = node.getTypeNode()
+
     let children
 
     switch (node.getKind()) {
       case SyntaxKind.FunctionType:
         props.valueType = node.getStructure().returnType
-        props.parameters = node.getParameters().map(this._renderParameter)
+        props.parameters = node.getParameters().map((param, index) => this._parseParameter(param, index))
         break
       case SyntaxKind.TypeLiteral:
         children = [
-          ...node.getMethods().map(this._renderMethod),
-          ...node.getProperties().map(this._renderProperty)
+          ...node.getMethods().map(method => this._parseMethod(method)),
+          ...node.getProperties().map(prop => this._parseProperty(prop))
         ]
         break
       default:
@@ -99,10 +79,36 @@ class TypeDefinitionParser {
     return u(node.getKindName(), props, children)
   }
 
-  _renderParameter (node) {
+  _parseFunctionDeclaration (node, props, mod) {
+    const st = node.getStructure()
+    const source = mod.sourceFile.forEachDescendant(node => {
+      if (getName(node) === st.name) {
+        return node
+      }
+    })
+    props.valueType = st.returnType
+    props.parameters = node.getParameters().map((param, index) => this._parseParameter(param, index, source.getStructure().parameters))
+    props.isGenerator = source.isGenerator()
+    props.isAsync = source.isAsync()
+    return u(node.getKindName(), props)
+  }
+
+  _parseClassDeclaration (node, props, mod) {
+    const st = node.getStructure()
+    props.extends = st.extends
+    return u(node.getKindName(), props, [
+      ...node.getConstructors().map(ctr => this._parseConstructor(ctr, mod)),
+      ...node.getProperties().map(prop => this._parseProperty(prop)),
+      ...node.getGetAccessors().map(accessor => this._parseAccessor(accessor)),
+      ...node.getSetAccessors().map(accessor => this._parseAccessor(accessor)),
+      ...node.getMethods().map(method => this._parseMethod(method, mod))
+    ])
+  }
+
+  _parseParameter (node, index, sourceParameters = []) {
     const st = node.getStructure()
     const parentDoc = getJsDocStructure(node.getParent())
-    let doc = parentDoc && parentDoc.tags.find(t => t.tagName === 'param' && t.name === st.name)
+    let doc = parentDoc && parentDoc.tags.filter(t => t.tagName === 'param')[index]
     let children = null
     let typeInfo = null
 
@@ -132,18 +138,32 @@ class TypeDefinitionParser {
       typeInfo = parseParameterType(node, doc)
     }
 
-    return u(node.getKindName(), {
-      name: st.name,
+    let name = st.name
+    if (doc && (name.startsWith('{') || name.startsWith('['))) {
+      name = doc.name
+    }
+
+    const props = {
+      name,
       doc: {
         description: doc && doc.text,
         tags: []
       },
       isRestParameter: st.isRestParameter,
       ...typeInfo
-    }, children)
+    }
+
+    const sourceParam = sourceParameters.find(sp => sp.name === st.name)
+
+    if (sourceParam && sourceParam.initializer) {
+      props.defaultValue = sourceParam.initializer
+      props.isOptional = true
+    }
+
+    return u(node.getKindName(), props, children)
   }
 
-  _renderDeclaration (node, props) {
+  _parseDeclaration (node, props) {
     props.kind = node.getDeclarationKind()
     const dec = node.getDeclarations()[0]
     const st = dec.getStructure()
@@ -152,45 +172,64 @@ class TypeDefinitionParser {
     return u(dec.getKindName(), props)
   }
 
-  _renderProperty (node) {
+  _parseProperty (node) {
+    const type = node.getKindName()
     const st = node.getStructure()
-    return u(node.getKindName(), {
+    const doc = getJsDocStructure(node, removeDocParams)
+
+    if (doc && !doc.description) {
+      const tag = doc.tags && doc.tags.find(t => t.tagName === 'type')
+      doc.tags = doc.tags.filter(t => t !== tag)
+      doc.description = tag && tag.text
+    }
+
+    return u(type, {
       name: st.name,
+      valueType: getType(node),
+      isReadonly: st.isReadonly,
+      doc
+    })
+  }
+
+  _parseConstructor (node, mod) {
+    const source = mod.sourceFile.forEachDescendant(n => {
+      if (node.getKindName() === n.getKindName() && getName(node.getParent()) === getName(n.getParent())) {
+        return node
+      }
+    })
+    return u(node.getKindName(), {
+      parameters: node.getParameters().map((param, index) => this._parseParameter(param, index, source && source.getStructure().parameters)),
       valueType: getType(node),
       doc: getJsDocStructure(node, removeDocParams)
     })
   }
 
-  _renderConstructor (node) {
-    return u(node.getKindName(), {
-      parameters: node.getParameters().map(this._renderParameter),
-      valueType: getType(node),
-      doc: getJsDocStructure(node, removeDocParams)
-    })
-  }
-
-  _renderAccessor (node) {
+  _parseAccessor (node) {
     const st = node.getStructure()
     return u(node.getKindName(), {
       name: st.name,
-      isAbstract: st.isAbstract,
       isStatic: st.isStatic,
+      isReadonly: st.isReadonly,
       valueType: getType(node),
       doc: getJsDocStructure(node, removeDocParams)
     })
   }
 
-  _renderMethod (node) {
+  _parseMethod (node, mod) {
     const st = node.getStructure()
+    const source = mod.sourceFile.forEachDescendant(node => {
+      if (getName(node) === st.name) {
+        return node
+      }
+    })
     return u(node.getKindName(), {
       name: st.name,
-      parameters: node.getParameters().map(this._renderParameter),
+      parameters: node.getParameters().map((param, index) => this._parseParameter(param, index, source.getStructure().parameters)),
       valueType: getType(node),
       doc: getJsDocStructure(node, removeDocParams),
-      isGenerator: st.isGenerator,
-      isAsync: st.isAsync,
-      isStatic: st.isStatic,
-      isAbstract: st.isAbstract
+      isGenerator: source.isGenerator(),
+      isAsync: source.isAsync(),
+      isStatic: st.isStatic
     })
   }
 }

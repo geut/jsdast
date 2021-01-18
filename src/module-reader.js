@@ -18,7 +18,7 @@ class ModuleFile {
     this.doc = null
 
     const statements = this.sourceFile.getStatementsWithComments()
-    const documentation = statements.length > 0 && statements[0].getJsDocs()[0]
+    const documentation = statements.length > 0 && statements[0].getJsDocs && statements[0].getJsDocs()[0]
     if (documentation && documentation.getTags().find(t => moduleTags.includes(t.getTagName()))) {
       // module documentation
       this.doc = documentation

@@ -10,11 +10,14 @@ Object {
             "description": undefined,
             "tags": Array [],
           },
+          "isAsync": false,
           "isDefaultExport": false,
           "isExported": false,
+          "isGenerator": false,
           "name": "test",
           "parameters": Array [
             Object {
+              "defaultValue": "null",
               "doc": Object {
                 "description": undefined,
                 "tags": Array [],
@@ -28,6 +31,7 @@ Object {
             Object {
               "children": Array [
                 Object {
+                  "defaultValue": "'test'",
                   "doc": Object {
                     "description": "name description",
                     "tags": Array [],
@@ -35,9 +39,10 @@ Object {
                   "isOptional": true,
                   "name": "name",
                   "type": "MultipleObjectParameter",
-                  "valueType": "string | 'test'",
+                  "valueType": "string | null",
                 },
                 Object {
+                  "defaultValue": undefined,
                   "doc": Object {
                     "description": "age description",
                     "tags": Array [],
@@ -48,6 +53,7 @@ Object {
                   "valueType": "number",
                 },
               ],
+              "defaultValue": undefined,
               "doc": Object {
                 "description": "a text description",
                 "tags": Array [],
@@ -59,6 +65,7 @@ Object {
               "valueType": "object",
             },
             Object {
+              "defaultValue": undefined,
               "doc": Object {
                 "description": undefined,
                 "tags": Array [],
@@ -80,13 +87,13 @@ Object {
                 "description": undefined,
                 "tags": Array [],
               },
-              "isAbstract": false,
               "isAsync": false,
               "isGenerator": false,
               "isStatic": false,
               "name": "test",
               "parameters": Array [
                 Object {
+                  "defaultValue": "null",
                   "doc": Object {
                     "description": undefined,
                     "tags": Array [],
@@ -100,6 +107,7 @@ Object {
                 Object {
                   "children": Array [
                     Object {
+                      "defaultValue": "'test'",
                       "doc": Object {
                         "description": "name description",
                         "tags": Array [],
@@ -107,9 +115,10 @@ Object {
                       "isOptional": true,
                       "name": "name",
                       "type": "MultipleObjectParameter",
-                      "valueType": "string | 'test'",
+                      "valueType": "string | null",
                     },
                     Object {
+                      "defaultValue": undefined,
                       "doc": Object {
                         "description": "age description",
                         "tags": Array [],
@@ -120,6 +129,7 @@ Object {
                       "valueType": "number",
                     },
                   ],
+                  "defaultValue": undefined,
                   "doc": Object {
                     "description": "a text description",
                     "tags": Array [],
@@ -131,6 +141,7 @@ Object {
                   "valueType": "object",
                 },
                 Object {
+                  "defaultValue": undefined,
                   "doc": Object {
                     "description": undefined,
                     "tags": Array [],
@@ -184,11 +195,14 @@ Object {
               },
             ],
           },
+          "isAsync": false,
           "isDefaultExport": false,
           "isExported": false,
+          "isGenerator": false,
           "name": "sum",
           "parameters": Array [
             Object {
+              "defaultValue": undefined,
               "doc": Object {
                 "description": undefined,
                 "tags": Array [],
@@ -200,6 +214,7 @@ Object {
               "valueType": "number",
             },
             Object {
+              "defaultValue": undefined,
               "doc": Object {
                 "description": undefined,
                 "tags": Array [],
@@ -279,12 +294,14 @@ Object {
                 "description": "some a description",
                 "tags": Array [],
               },
+              "isReadonly": false,
               "name": "a",
               "type": "PropertySignature",
               "valueType": "string",
             },
             Object {
               "doc": undefined,
+              "isReadonly": false,
               "name": "b",
               "type": "PropertySignature",
               "valueType": "number",
@@ -346,6 +363,7 @@ Object {
               },
               "parameters": Array [
                 Object {
+                  "defaultValue": undefined,
                   "doc": Object {
                     "description": "Set a name",
                     "tags": Array [],
@@ -357,6 +375,7 @@ Object {
                   "valueType": "string",
                 },
                 Object {
+                  "defaultValue": undefined,
                   "doc": Object {
                     "description": "Set the age",
                     "tags": Array [],
@@ -373,12 +392,14 @@ Object {
             },
             Object {
               "doc": undefined,
+              "isReadonly": false,
               "name": "_name",
               "type": "PropertyDeclaration",
               "valueType": "string",
             },
             Object {
               "doc": undefined,
+              "isReadonly": false,
               "name": "_age",
               "type": "PropertyDeclaration",
               "valueType": "number",
@@ -396,6 +417,7 @@ Object {
                   },
                 ],
               },
+              "isReadonly": false,
               "name": "_aPrivateMethod",
               "type": "PropertyDeclaration",
               "valueType": undefined,
@@ -413,7 +435,7 @@ Object {
                   },
                 ],
               },
-              "isAbstract": false,
+              "isReadonly": undefined,
               "isStatic": false,
               "name": "name",
               "type": "GetAccessor",
@@ -421,7 +443,7 @@ Object {
             },
             Object {
               "doc": undefined,
-              "isAbstract": false,
+              "isReadonly": undefined,
               "isStatic": false,
               "name": "age",
               "type": "GetAccessor",
@@ -429,7 +451,7 @@ Object {
             },
             Object {
               "doc": undefined,
-              "isAbstract": false,
+              "isReadonly": undefined,
               "isStatic": false,
               "name": "age",
               "type": "SetAccessor",
@@ -448,13 +470,13 @@ Object {
                   },
                 ],
               },
-              "isAbstract": false,
               "isAsync": false,
               "isGenerator": false,
               "isStatic": true,
               "name": "create",
               "parameters": Array [
                 Object {
+                  "defaultValue": undefined,
                   "doc": Object {
                     "description": "Set a name",
                     "tags": Array [],
@@ -466,6 +488,7 @@ Object {
                   "valueType": "string",
                 },
                 Object {
+                  "defaultValue": undefined,
                   "doc": Object {
                     "description": undefined,
                     "tags": Array [],
@@ -482,7 +505,6 @@ Object {
             },
             Object {
               "doc": undefined,
-              "isAbstract": false,
               "isAsync": false,
               "isGenerator": false,
               "isStatic": false,
@@ -532,11 +554,14 @@ console.log(human.age)",
               },
             ],
           },
+          "isAsync": false,
           "isDefaultExport": false,
           "isExported": true,
+          "isGenerator": false,
           "name": "humanFactory",
           "parameters": Array [
             Object {
+              "defaultValue": undefined,
               "doc": Object {
                 "description": "Set a name",
                 "tags": Array [],
@@ -607,6 +632,7 @@ which are used to build widgets.",
               },
               "parameters": Array [
                 Object {
+                  "defaultValue": undefined,
                   "doc": Object {
                     "description": undefined,
                     "tags": Array [],
@@ -623,6 +649,7 @@ which are used to build widgets.",
             },
             Object {
               "doc": undefined,
+              "isReadonly": false,
               "name": "_name",
               "type": "PropertyDeclaration",
               "valueType": "string",
@@ -640,7 +667,7 @@ which are used to build widgets.",
                   },
                 ],
               },
-              "isAbstract": false,
+              "isReadonly": undefined,
               "isStatic": false,
               "name": "name",
               "type": "GetAccessor",
@@ -697,6 +724,7 @@ which are used to build widgets.",
             },
             Object {
               "doc": undefined,
+              "isReadonly": false,
               "name": "_power",
               "type": "PropertyDeclaration",
               "valueType": "Power",
@@ -714,13 +742,13 @@ which are used to build widgets.",
                   },
                 ],
               },
-              "isAbstract": false,
               "isAsync": false,
               "isGenerator": false,
               "isStatic": false,
               "name": "setPower",
               "parameters": Array [
                 Object {
+                  "defaultValue": undefined,
                   "doc": Object {
                     "description": undefined,
                     "tags": Array [],
@@ -748,7 +776,6 @@ which are used to build widgets.",
                   },
                 ],
               },
-              "isAbstract": false,
               "isAsync": false,
               "isGenerator": false,
               "isStatic": false,
@@ -775,6 +802,51 @@ which are used to build widgets.",
     },
     Object {
       "children": Array [],
+      "doc": Object {
+        "description": "",
+        "tags": Array [],
+      },
+      "name": "Index",
+      "type": "Module",
+    },
+  ],
+  "type": "Root",
+}
+`;
+
+exports[`destructuring 1`] = `
+Object {
+  "children": Array [
+    Object {
+      "children": Array [
+        Object {
+          "doc": Object {
+            "description": undefined,
+            "tags": Array [],
+          },
+          "isAsync": false,
+          "isDefaultExport": false,
+          "isExported": false,
+          "isGenerator": false,
+          "name": "test",
+          "parameters": Array [
+            Object {
+              "defaultValue": undefined,
+              "doc": Object {
+                "description": undefined,
+                "tags": Array [],
+              },
+              "isOptional": false,
+              "isRestParameter": false,
+              "name": "opts",
+              "type": "Parameter",
+              "valueType": "object",
+            },
+          ],
+          "type": "FunctionDeclaration",
+          "valueType": "void",
+        },
+      ],
       "doc": Object {
         "description": "",
         "tags": Array [],

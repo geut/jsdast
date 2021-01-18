@@ -64,3 +64,18 @@ class Test {
 
   expect(tree).toMatchSnapshot()
 })
+
+test('destructuring', () => {
+  const tree = unified().use(parser).parse(`
+/**
+ * @param {object} opts
+ */
+function test({ name, age }) {}
+  `)
+
+  for (const node of tree.children) {
+    delete node.path
+  }
+
+  expect(tree).toMatchSnapshot()
+})

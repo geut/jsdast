@@ -108,24 +108,25 @@ const getType = node => {
   return compilerType.thisType ? compilerType.thisType.symbol.escapedName : stType
 }
 
-const isOptional = type => type.split('|').pop().trim() === 'null'
+const getIsOptional = type => type.split('|').pop().trim() === 'null'
 
 const parseParameterType = (node, doc) => {
   const type = typeof node === 'string' ? node : getType(node)
+  const isOptional = getIsOptional(type)
 
-  if (!doc) return { valueType: type, isOptional: isOptional(type) }
+  if (!doc) return { valueType: type, isOptional }
 
   if (doc.fullText.includes(`} [${doc.name}]`)) {
-    return { valueType: `${type} | null`, isOptional: true }
+    return { valueType: `${type} | null`, isOptional: true, defaultValue: 'null' }
   }
 
   const defaultValue = doc.fullText.match(new RegExp(`\\}\\s\\[${doc.name}=(\\s*.*)\\]`, 'i'))
 
   if (defaultValue && defaultValue.length === 2) {
-    return { valueType: `${type} | ${defaultValue[1]}`, isOptional: true }
+    return { valueType: `${type} | null`, isOptional: true, defaultValue: defaultValue[1] }
   }
 
-  return { valueType: type, isOptional: isOptional(type) }
+  return { valueType: type, isOptional, defaultValue: isOptional ? 'null' : undefined }
 }
 
 const removeDocParams = tag => !['param'].includes(tag.tagName)
