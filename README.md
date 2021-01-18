@@ -1,7 +1,7 @@
 # jsdast
 Template to create modules following the :snail: **GEUT** path
 
-[![Build Status](https://travis-ci.com/geut/jsdast.svg?branch=main)](https://travis-ci.com/geut/jsdast)
+[![Build Status](https://travis-ci.com/geut/jsdast.svg?token=yjuaa2ubUupz6ACajDgF&branch=main)](https://travis-ci.com/geut/jsdast)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
