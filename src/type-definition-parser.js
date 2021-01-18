@@ -81,8 +81,8 @@ class TypeDefinitionParser {
 
   _parseFunctionDeclaration (node, props, mod) {
     const st = node.getStructure()
-    const source = mod.sourceFile.forEachDescendant(node => {
-      if (getName(node) === st.name) {
+    const source = mod.sourceFile.forEachDescendant(n => {
+      if (getName(n) === st.name && getName(n.getParent()) === getName(node.getParent())) {
         return node
       }
     })
@@ -193,7 +193,7 @@ class TypeDefinitionParser {
 
   _parseConstructor (node, mod) {
     const source = mod.sourceFile.forEachDescendant(n => {
-      if (node.getKindName() === n.getKindName() && getName(node.getParent()) === getName(n.getParent())) {
+      if (n.getKindName() === node.getKindName() && getName(n.getParent()) === getName(node.getParent())) {
         return node
       }
     })
@@ -217,11 +217,21 @@ class TypeDefinitionParser {
 
   _parseMethod (node, mod) {
     const st = node.getStructure()
-    const source = mod.sourceFile.forEachDescendant(node => {
-      if (getName(node) === st.name) {
+    // if (st.name === '_encode') {
+    //   console.log(mod.name)
+    //   mod.sourceFile.forEachDescendant(node => {
+    //     console.log(node.getText())
+    //     if (getName(node) === st.name) {
+    //       return node
+    //     }
+    //   })
+    // }
+    const source = mod.sourceFile.forEachDescendant(n => {
+      if (getName(n) === st.name && getName(n.getParent()) === getName(node.getParent())) {
         return node
       }
     })
+
     return u(node.getKindName(), {
       name: st.name,
       parameters: node.getParameters().map((param, index) => this._parseParameter(param, index, source.getStructure().parameters)),
