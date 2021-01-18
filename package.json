@@ -1,7 +1,7 @@
 {
   "name": "@geut/jsdast",
   "version": "0.0.1",
-  "description": "Syntax tree based on Unist spec for TypeScript type definitions",
+  "description": "Syntax tree JSDoc based on Unist spec",
   "main": "src/index.js",
   "files": [
     "lib",
@@ -48,9 +48,10 @@
     "url": "git+https://github.com/geut/jsdast.git"
   },
   "keywords": [
-    "create",
-    "geut",
-    "module"
+    "jsdoc",
+    "tsdoc",
+    "unist",
+    "ast"
   ],
   "author": {
     "name": "GEUT",

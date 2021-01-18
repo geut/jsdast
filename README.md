@@ -1,5 +1,5 @@
 # jsdast
-Template to create modules following the :snail: **GEUT** path
+Syntax tree JSDoc based on Unist spec
 
 [![Build Status](https://travis-ci.com/geut/jsdast.svg?token=yjuaa2ubUupz6ACajDgF&branch=main)](https://travis-ci.com/geut/jsdast)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
@@ -10,12 +10,87 @@ Template to create modules following the :snail: **GEUT** path
 ## Install
 
 ```
+$ npm install @geut/jsdast
 ```
 
 ## Usage
 
+```javascript
+const unified = require('unified')
+const { parser } = require('@geut/jsdast')
+
+const tree = unified().use(parser).parse(`
+  /**
+   * @param {number} a
+   * @param {number} b
+   * @returns {number}
+   */
+  function sum(a, b) {
+    return a + b
+  }
+`)
+
+console.log(JSON.stringify(tree, null, 2))
+
+/*
+{
+  "type": "Root",
+  "children": [
+    {
+      "type": "Module",
+      "name": "Index",
+      "doc": {
+        "description": "",
+        "tags": []
+      },
+      "children": [
+        {
+          "type": "FunctionDeclaration",
+          "name": "sum",
+          "doc": {
+            "tags": [
+              {
+                "tagName": "returns",
+                "fullText": "@returns {number}",
+                "typeExpression": "number"
+              }
+            ]
+          },
+          "isExported": false,
+          "isDefaultExport": false,
+          "valueType": "number",
+          "parameters": [
+            {
+              "type": "Parameter",
+              "name": "a",
+              "doc": {
+                "tags": []
+              },
+              "isRestParameter": false,
+              "valueType": "number",
+              "isOptional": false
+            },
+            {
+              "type": "Parameter",
+              "name": "b",
+              "doc": {
+                "tags": []
+              },
+              "isRestParameter": false,
+              "valueType": "number",
+              "isOptional": false
+            }
+          ],
+          "isGenerator": false,
+          "isAsync": false
+        }
+      ]
+    }
+  ]
+}
+*/
 ```
-```
+
 
 ## Issues
 
