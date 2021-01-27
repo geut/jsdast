@@ -102,28 +102,41 @@ function getJsDocFromText (text) {
 }
 
 const getType = node => {
-  const st = node.getStructure()
-  const stType = node.getReturnType ? st.returnType : st.type
-  const { compilerType } = node.getReturnType ? node.getReturnType() : node.getType()
-  return compilerType.thisType ? compilerType.thisType.symbol.escapedName : stType
+  let type
+  if (typeof node === 'string') {
+    type = node
+  } else {
+    const st = node.getStructure()
+    const stType = node.getReturnType ? st.returnType : st.type
+    const { compilerType } = node.getReturnType ? node.getReturnType() : node.getType()
+    type = compilerType.thisType ? compilerType.thisType.symbol.escapedName : stType
+  }
+  if (!type) return
+  return type.split('|').map(t => t.trim()).join(' | ')
 }
 
 const getIsOptional = type => type.split('|').pop().trim() === 'null'
 
 const parseParameterType = (node, doc) => {
-  const type = typeof node === 'string' ? node : getType(node)
+  let type = getType(node)
   const isOptional = getIsOptional(type)
 
   if (!doc) return { valueType: type, isOptional }
 
   if (doc.fullText.includes(`} [${doc.name}]`)) {
-    return { valueType: `${type} | null`, isOptional: true }
+    if (!type.endsWith('null')) {
+      type = type.trim() + ' | null'
+    }
+    return { valueType: type, isOptional: true }
   }
 
   const defaultValue = doc.fullText.match(new RegExp(`\\}\\s\\[${doc.name}=(\\s*.*)\\]`, 'i'))
 
   if (defaultValue && defaultValue.length === 2) {
-    return { valueType: `${type} | null`, isOptional: true, defaultValue: defaultValue[1] }
+    if (!type.endsWith('null')) {
+      type = type.trim() + ' | null'
+    }
+    return { valueType: type, isOptional: true, defaultValue: defaultValue[1] }
   }
 
   return { valueType: type, isOptional }
