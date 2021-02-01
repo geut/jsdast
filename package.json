@@ -1,6 +1,6 @@
 {
   "name": "@geut/jsdast",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Syntax tree JSDoc based on Unist spec",
   "main": "src/index.js",
   "files": [

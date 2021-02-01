@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 0.0.6 - 2021-02-01 [YANKED]
+
 ## 0.0.5 - 2021-02-01 [YANKED]
 
 ## 0.0.4 - 2021-02-01 [YANKED]
@@ -13,4 +15,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 0.0.3 - 2021-02-01 [YANKED]
 
 ## 0.0.2 - 2021-01-27 [YANKED]
-[Unreleased]: https://github.com/geut/jsdast/compare/v0.0.5...HEAD
+[Unreleased]: https://github.com/geut/jsdast/compare/v0.0.6...HEAD
