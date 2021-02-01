@@ -72,7 +72,7 @@ const getName = node => {
   }
 }
 
-const getType = node => {
+const getType = (node, asArray = false) => {
   let type
   if (typeof node === 'string') {
     type = node
@@ -83,23 +83,24 @@ const getType = node => {
     type = compilerType.thisType ? compilerType.thisType.symbol.escapedName : stType
   }
   if (!type) return
-  return type.split('|').map(t => t.trim()).join(' | ')
+  const arr = type.split('|').map(t => t.trim())
+  if (asArray) return arr
+  return arr.join(' | ')
 }
 
-const getIsOptional = type => type.split('|').pop().trim() === 'null'
+const getIsOptional = (node, type) => {
+  if (type[type.length - 1].trim() === 'null') return true
+  if (typeof node !== 'string' && node.isOptional) return node.isOptional()
+  return false
+}
 
 const parseParameterType = (node, doc) => {
-  let type = getType(node)
-  const isOptional = getIsOptional(type)
+  let type = getType(node, true)
+  const isOptional = getIsOptional(node, type)
+
+  type = type.filter(t => t !== 'null')
 
   if (!doc) return { valueType: type, isOptional }
-
-  if (doc.fullText.includes(`} [${doc.name}]`)) {
-    if (!type.endsWith('null')) {
-      type = type.trim() + ' | null'
-    }
-    return { valueType: type, isOptional: true }
-  }
 
   const defaultValue = doc.fullText.match(new RegExp(`\\}\\s\\[${doc.name}=(\\s*.*)\\]`, 'i'))
   if (defaultValue && defaultValue.length === 2) {
