@@ -1,5 +1,4 @@
-const { Project, SyntaxKind, InMemoryFileSystemHost, Node } = require('ts-morph')
-
+const { SyntaxKind } = require('ts-morph')
 const trim = require('lodash.trim')
 
 const moduleTags = ['module', 'remarks', 'privateRemarks', 'packageDocumentation']
@@ -56,7 +55,7 @@ const getJsDoc = (node) => {
 }
 
 const getJsDocStructure = (node, filter = () => true) => {
-  const doc = getJsDoc(node)
+  const doc = node.getKind() === SyntaxKind.JSDocComment ? node : getJsDoc(node)
   if (!doc) return
   const description = trim(doc.getDescription(), '\n ')
   return {
@@ -71,34 +70,6 @@ const getName = node => {
   if (node.getKind() === SyntaxKind.VariableStatement) {
     return node.getStructure().declarations[0].name
   }
-}
-
-const getInfoFromText = (text, opts = {}) => {
-  const {
-    isDefinitionFile = false,
-    filePath = undefined,
-    host = new InMemoryFileSystemHost({ skipLoadingLibFiles: true }),
-    compilerOptions = undefined
-  } = opts
-
-  const project = new Project({ compilerOptions, fileSystem: host })
-  const sourceFile = project.createSourceFile(getFilePath(), text)
-
-  return {
-    project,
-    sourceFile,
-    firstChild: sourceFile.forEachChild(child => child)
-  }
-
-  function getFilePath () {
-    if (filePath != null) { return filePath }
-    return isDefinitionFile ? 'testFile.d.ts' : 'testFile.ts'
-  }
-}
-
-function getJsDocFromText (text) {
-  const info = getInfoFromText(text)
-  return { descendant: info.sourceFile.getFirstDescendantOrThrow(Node.isJSDocTag), ...info }
 }
 
 const getType = node => {
@@ -144,6 +115,12 @@ const parseParameterType = (node, doc) => {
 
 const removeDocParams = tag => !['param'].includes(tag.tagName)
 
+const getParameterNameFromText = text => {
+  const name = text.split(' ')[2]
+  if (!name) return ''
+  return trim(name, '[]').split('=')[0].trim()
+}
+
 module.exports = {
   parseTextTag,
   parseTags,
@@ -151,9 +128,8 @@ module.exports = {
   getJsDocStructure,
   getName,
   moduleTags,
-  getInfoFromText,
-  getJsDocFromText,
   getType,
   parseParameterType,
-  removeDocParams
+  removeDocParams,
+  getParameterNameFromText
 }

@@ -79,3 +79,31 @@ function test({ name, age }) {}
 
   expect(tree).toMatchSnapshot()
 })
+
+test('events', () => {
+  const tree = unified().use(parser).parse(`
+function test() {}
+
+class Robot {}
+
+/**
+ * @event Robot#pong
+ * @param {string} a some a text
+ * @param {string} [b] some b text
+ * @return {Promise}
+ */
+
+/**
+ * @event Robot#ping
+ * @param {Object} opts
+ * @param {string} opts.a some a text
+ * @returns {Promise}
+ */
+  `)
+
+  for (const node of tree.children) {
+    delete node.path
+  }
+
+  expect(tree).toMatchSnapshot()
+})

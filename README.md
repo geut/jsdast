@@ -59,7 +59,9 @@ console.log(JSON.stringify(tree, null, 2))
           "isExported": false,
           "isDefaultExport": false,
           "valueType": "number",
-          "parameters": [
+          "isGenerator": false,
+          "isAsync": false,
+          "children": [
             {
               "type": "Parameter",
               "name": "a",
@@ -80,9 +82,7 @@ console.log(JSON.stringify(tree, null, 2))
               "valueType": "number",
               "isOptional": false
             }
-          ],
-          "isGenerator": false,
-          "isAsync": false
+          ]
         }
       ]
     }
