@@ -102,11 +102,7 @@ const parseParameterType = (node, doc) => {
   }
 
   const defaultValue = doc.fullText.match(new RegExp(`\\}\\s\\[${doc.name}=(\\s*.*)\\]`, 'i'))
-
   if (defaultValue && defaultValue.length === 2) {
-    if (!type.endsWith('null')) {
-      type = type.trim() + ' | null'
-    }
     return { valueType: type, isOptional: true, defaultValue: defaultValue[1] }
   }
 

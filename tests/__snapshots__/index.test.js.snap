@@ -30,7 +30,7 @@ Object {
                   "isRestParameter": false,
                   "name": "name",
                   "type": "Parameter",
-                  "valueType": "string | null",
+                  "valueType": "string",
                 },
                 Object {
                   "doc": Object {
@@ -105,7 +105,7 @@ Object {
                       "isRestParameter": false,
                       "name": "name",
                       "type": "Parameter",
-                      "valueType": "string | null",
+                      "valueType": "string",
                     },
                     Object {
                       "doc": Object {
