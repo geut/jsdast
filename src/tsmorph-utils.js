@@ -98,7 +98,7 @@ const parseParameterType = (node, doc) => {
   let type = getType(node, true)
   const isOptional = getIsOptional(node, type)
 
-  type = type.filter(t => t !== 'null')
+  type = type.filter(t => t !== 'null').join(' | ')
 
   if (!doc) return { valueType: type, isOptional }
 

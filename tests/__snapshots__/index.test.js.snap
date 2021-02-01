@@ -16,9 +16,7 @@ Object {
               "isRestParameter": false,
               "name": "a",
               "type": "Parameter",
-              "valueType": Array [
-                "string",
-              ],
+              "valueType": "string",
             },
             Object {
               "children": Array [
@@ -32,9 +30,7 @@ Object {
                   "isRestParameter": false,
                   "name": "name",
                   "type": "Parameter",
-                  "valueType": Array [
-                    "string",
-                  ],
+                  "valueType": "string",
                 },
                 Object {
                   "doc": Object {
@@ -45,9 +41,7 @@ Object {
                   "isRestParameter": false,
                   "name": "age",
                   "type": "Parameter",
-                  "valueType": Array [
-                    "number",
-                  ],
+                  "valueType": "number",
                 },
               ],
               "doc": Object {
@@ -58,9 +52,7 @@ Object {
               "isRestParameter": false,
               "name": "opts",
               "type": "Parameter",
-              "valueType": Array [
-                "object",
-              ],
+              "valueType": "object",
             },
             Object {
               "doc": Object {
@@ -71,9 +63,7 @@ Object {
               "isRestParameter": false,
               "name": "b",
               "type": "Parameter",
-              "valueType": Array [
-                "number",
-              ],
+              "valueType": "number",
             },
           ],
           "doc": Object {
@@ -101,9 +91,7 @@ Object {
                   "isRestParameter": false,
                   "name": "a",
                   "type": "Parameter",
-                  "valueType": Array [
-                    "string",
-                  ],
+                  "valueType": "string",
                 },
                 Object {
                   "children": Array [
@@ -117,9 +105,7 @@ Object {
                       "isRestParameter": false,
                       "name": "name",
                       "type": "Parameter",
-                      "valueType": Array [
-                        "string",
-                      ],
+                      "valueType": "string",
                     },
                     Object {
                       "doc": Object {
@@ -130,9 +116,7 @@ Object {
                       "isRestParameter": false,
                       "name": "age",
                       "type": "Parameter",
-                      "valueType": Array [
-                        "number",
-                      ],
+                      "valueType": "number",
                     },
                   ],
                   "doc": Object {
@@ -143,9 +127,7 @@ Object {
                   "isRestParameter": false,
                   "name": "opts",
                   "type": "Parameter",
-                  "valueType": Array [
-                    "object",
-                  ],
+                  "valueType": "object",
                 },
                 Object {
                   "doc": Object {
@@ -156,9 +138,7 @@ Object {
                   "isRestParameter": false,
                   "name": "b",
                   "type": "Parameter",
-                  "valueType": Array [
-                    "number",
-                  ],
+                  "valueType": "number",
                 },
               ],
               "doc": Object {
@@ -209,9 +189,7 @@ Object {
               "isRestParameter": false,
               "name": "a",
               "type": "Parameter",
-              "valueType": Array [
-                "number",
-              ],
+              "valueType": "number",
             },
             Object {
               "doc": Object {
@@ -222,9 +200,7 @@ Object {
               "isRestParameter": false,
               "name": "b",
               "type": "Parameter",
-              "valueType": Array [
-                "number",
-              ],
+              "valueType": "number",
             },
           ],
           "doc": Object {
@@ -276,9 +252,7 @@ Object {
               "isRestParameter": false,
               "name": "age",
               "type": "Parameter",
-              "valueType": Array [
-                "number",
-              ],
+              "valueType": "number",
             },
           ],
           "doc": Object {
@@ -333,9 +307,7 @@ Object {
                   "isRestParameter": false,
                   "name": "name",
                   "type": "Parameter",
-                  "valueType": Array [
-                    "string",
-                  ],
+                  "valueType": "string",
                 },
                 Object {
                   "doc": Object {
@@ -346,9 +318,7 @@ Object {
                   "isRestParameter": false,
                   "name": "age",
                   "type": "Parameter",
-                  "valueType": Array [
-                    "number",
-                  ],
+                  "valueType": "number",
                 },
               ],
               "doc": Object {
@@ -445,9 +415,7 @@ Object {
                   "isRestParameter": false,
                   "name": "name",
                   "type": "Parameter",
-                  "valueType": Array [
-                    "string",
-                  ],
+                  "valueType": "string",
                 },
                 Object {
                   "doc": Object {
@@ -458,9 +426,7 @@ Object {
                   "isRestParameter": false,
                   "name": "age",
                   "type": "Parameter",
-                  "valueType": Array [
-                    "number",
-                  ],
+                  "valueType": "number",
                 },
               ],
               "doc": Object {
@@ -531,9 +497,7 @@ console.log(human.age)",
               "isRestParameter": false,
               "name": "name",
               "type": "Parameter",
-              "valueType": Array [
-                "string",
-              ],
+              "valueType": "string",
             },
           ],
           "doc": Object {
@@ -607,9 +571,7 @@ which are used to build widgets.",
                   "isRestParameter": false,
                   "name": "name",
                   "type": "Parameter",
-                  "valueType": Array [
-                    "string",
-                  ],
+                  "valueType": "string",
                 },
               ],
               "doc": Object {
@@ -685,9 +647,7 @@ which are used to build widgets.",
                   "isRestParameter": false,
                   "name": "name",
                   "type": "Parameter",
-                  "valueType": Array [
-                    "string",
-                  ],
+                  "valueType": "string",
                 },
                 Object {
                   "doc": Object {
@@ -698,9 +658,7 @@ which are used to build widgets.",
                   "isRestParameter": false,
                   "name": "age",
                   "type": "Parameter",
-                  "valueType": Array [
-                    "number",
-                  ],
+                  "valueType": "number",
                 },
               ],
               "doc": undefined,
@@ -725,9 +683,7 @@ which are used to build widgets.",
                   "isRestParameter": false,
                   "name": "power",
                   "type": "Parameter",
-                  "valueType": Array [
-                    "Power",
-                  ],
+                  "valueType": "Power",
                 },
               ],
               "doc": Object {
@@ -816,9 +772,7 @@ Object {
               "isRestParameter": false,
               "name": "opts",
               "type": "Parameter",
-              "valueType": Array [
-                "object",
-              ],
+              "valueType": "object",
             },
           ],
           "doc": Object {
