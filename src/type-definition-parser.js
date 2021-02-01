@@ -92,7 +92,7 @@ class TypeDefinitionParser {
     const st = node.getStructure()
     const source = this._currentModule.sourceFile.forEachDescendant(n => {
       if (getName(n) === st.name && getName(n.getParent()) === getName(node.getParent())) {
-        return node
+        return n
       }
     })
     props.valueType = getType(node)
@@ -146,7 +146,7 @@ class TypeDefinitionParser {
   _parseConstructor (node) {
     const source = this._currentModule.sourceFile.forEachDescendant(n => {
       if (n.getKindName() === node.getKindName() && getName(n.getParent()) === getName(node.getParent())) {
-        return node
+        return n
       }
     })
 
@@ -173,7 +173,7 @@ class TypeDefinitionParser {
 
     const source = this._currentModule.sourceFile.forEachDescendant(n => {
       if (getName(n) === st.name && getName(n.getParent()) === getName(node.getParent())) {
-        return node
+        return n
       }
     })
 
