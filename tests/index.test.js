@@ -56,6 +56,15 @@ class Test {
    */
   test(a, opts, b) {}
 }
+
+/**
+ * @param {object} opts a text description
+ * @param {string} [opts.name='test'] name description
+ * @param {number} opts.age age description
+ */
+function test2(opts = {}) {
+  return opts.name
+}
   `)
 
   for (const node of tree.children) {

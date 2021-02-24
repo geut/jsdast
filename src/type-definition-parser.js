@@ -190,19 +190,24 @@ class TypeDefinitionParser {
   _parseParameter (node, index, sourceParameters = []) {
     const st = node.getStructure()
     const parentDoc = getJsDocStructure(node.getParent())
-    const doc = parentDoc && parentDoc.tags.filter(t => t.tagName === 'param')[index]
+    let doc = parentDoc && parentDoc.tags.filter(t => t.tagName === 'param')[index]
+    let children = null
+    let typeInfo = null
 
     if (doc && st.type.startsWith('{') && st.type.endsWith('}')) {
-      return this._parseMultipleObjectParameter(
+      const multipleObjectParameter = this._parseMultipleObjectParameter(
         doc.fullText
           .split('@param')
           .map(t => trim(t, '\n *'))
           .filter(Boolean)
           .map(t => `@param ${t}`)
       )
+      typeInfo = multipleObjectParameter.typeInfo
+      children = multipleObjectParameter.parameters
+      doc = multipleObjectParameter.doc
+    } else {
+      typeInfo = parseParameterType(node, doc)
     }
-
-    const typeInfo = parseParameterType(node, doc)
 
     let name = st.name
     if (doc && (name.startsWith('{') || name.startsWith('['))) {
@@ -225,7 +230,7 @@ class TypeDefinitionParser {
       props.isOptional = true
     }
 
-    return u(node.getKindName(), props)
+    return u(node.getKindName(), props, children)
   }
 
   _parseEvents (props) {
@@ -296,25 +301,25 @@ class TypeDefinitionParser {
   _parseMultipleObjectParameter (template) {
     const scopeName = getParameterNameFromText(template[0])
 
-    return u('Parameter', {
-      name: scopeName,
+    return {
       doc: {
         description: getParameterDescriptionFromText(template[0]),
         tags: []
       },
-      ...getParameterTypeFromText(template[0])
-    }, template
-      .slice(1)
-      .map(t => {
-        return u('Parameter', {
-          name: getParameterNameFromText(t).replace(`${scopeName}.`, ''),
-          doc: {
-            description: getParameterDescriptionFromText(t),
-            tags: []
-          },
-          ...getParameterTypeFromText(t)
+      typeInfo: getParameterTypeFromText(template[0]),
+      parameters: template
+        .slice(1)
+        .map(t => {
+          return u('Parameter', {
+            name: getParameterNameFromText(t).replace(`${scopeName}.`, ''),
+            doc: {
+              description: getParameterDescriptionFromText(t),
+              tags: []
+            },
+            ...getParameterTypeFromText(t)
+          })
         })
-      }))
+    }
   }
 }
 
