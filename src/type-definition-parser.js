@@ -2,10 +2,9 @@ const { SyntaxKind } = require('ts-morph')
 const u = require('unist-builder')
 const trim = require('lodash.trim')
 const parents = require('unist-util-parents')
-const crypto = require('crypto')
 
 const ModuleReader = require('./module-reader')
-const { parseTags, getJsDocStructure, getName, getType, parseParameterType, removeDocParams, getParameterNameFromText } = require('./tsmorph-utils')
+const { parseTags, getJsDocStructure, getName, getType, parseParameterType, removeDocParams, getParameterNameFromText, getParameterTypeFromText, getParameterDescriptionFromText } = require('./tsmorph-utils')
 
 class TypeDefinitionParser {
   constructor (opts = {}) {
@@ -191,18 +190,19 @@ class TypeDefinitionParser {
   _parseParameter (node, index, sourceParameters = []) {
     const st = node.getStructure()
     const parentDoc = getJsDocStructure(node.getParent())
-    let doc = parentDoc && parentDoc.tags.filter(t => t.tagName === 'param')[index]
-    let children = null
-    let typeInfo = null
+    const doc = parentDoc && parentDoc.tags.filter(t => t.tagName === 'param')[index]
 
     if (doc && st.type.startsWith('{') && st.type.endsWith('}')) {
-      const multipleObjectParameter = this._parseMultipleObjectParameter(doc)
-      typeInfo = multipleObjectParameter.typeInfo
-      children = multipleObjectParameter.parameters
-      doc = multipleObjectParameter.doc
-    } else {
-      typeInfo = parseParameterType(node, doc)
+      return this._parseMultipleObjectParameter(
+        doc.fullText
+          .split('@param')
+          .map(t => trim(t, '\n *'))
+          .filter(Boolean)
+          .map(t => `@param ${t}`)
+      )
     }
+
+    const typeInfo = parseParameterType(node, doc)
 
     let name = st.name
     if (doc && (name.startsWith('{') || name.startsWith('['))) {
@@ -225,7 +225,7 @@ class TypeDefinitionParser {
       props.isOptional = true
     }
 
-    return u(node.getKindName(), props, children)
+    return u(node.getKindName(), props)
   }
 
   _parseEvents (props) {
@@ -239,16 +239,16 @@ class TypeDefinitionParser {
             parameterTags.push(t)
             return false
           }
+
           if (['return', 'returns'].includes(t.tagName)) {
-            returnTag.push(`* ${trim(t.fullText, '\n* ')}\n`)
+            returnTag.push(`${trim(t.fullText, '\n* ')}`)
             return false
           }
+
           return true
         })
 
         const type = ev.tags.find(t => t.tagName === 'type')
-
-        const templateArgs = []
 
         if (type) {
           parameterTags = [
@@ -256,31 +256,31 @@ class TypeDefinitionParser {
               .filter(t => t.tagName !== 'param')
               .map(t => {
                 if (t.tagName === 'type') {
-                  templateArgs.push('arg')
-                  return `* @param {${t.typeExpression}} arg\n`
+                  return `@param {${t.typeExpression}} arg`
                 }
 
                 const [name, ...text] = t.text.split(' ')
-                return `* @param {${t.typeExpression}} arg.${name}${text.length > 0 ? ' ' + text.join(' ') : ''}\n`
-              }),
-            ...returnTag
+                return `@param {${t.typeExpression}} arg.${name}${text.length > 0 ? ' ' + text.join(' ') : ''}`
+              })
           ]
         } else {
           parameterTags = [
             ...parameterTags
               .filter(t => !['prop', 'property'].includes(t.tagName))
-              .map(t => {
-                templateArgs.push(t.name)
-                return `* ${trim(t.fullText, '\n* ')}\n`
-              }),
-            ...returnTag
+              .map(t => `${trim(t.fullText, '\n* ')}`)
           ]
         }
 
-        const text = `/**\n${parameterTags.join('')}*/\nfunction __func__${crypto.randomBytes(6).toString('hex')} (${templateArgs.join(', ')}) {}`
-        const { sourceStatement, declarationStatement } = this._modules.getStatementFromText(text)
-        const sourceParameters = sourceStatement.getStructure().parameters
-        const children = declarationStatement.getParameters().map((param, index) => this._parseParameter(param, index, sourceParameters))
+        const { valueType = 'void' } = (returnTag[0] && getParameterTypeFromText(returnTag[0])) || {}
+
+        parameterTags = parameterTags.map(t => u('Parameter', {
+          name: getParameterNameFromText(t),
+          doc: {
+            description: getParameterDescriptionFromText(t),
+            tags: []
+          },
+          ...getParameterTypeFromText(t)
+        }))
 
         return u('Event', {
           name: ev.eventName,
@@ -288,44 +288,33 @@ class TypeDefinitionParser {
             description: ev.description,
             tags
           },
-          valueType: getType(declarationStatement)
-        }, children)
+          valueType
+        }, parameterTags)
       })
   }
 
-  _parseMultipleObjectParameter (doc) {
-    let template = doc.fullText
-      .split('@param')
-      .map(t => trim(t, '\n *'))
-      .filter(Boolean)
-      .map(t => `@param ${t}`)
-
+  _parseMultipleObjectParameter (template) {
     const scopeName = getParameterNameFromText(template[0])
-    const templateArgs = [scopeName]
-    template = template
-      .map((t, i) => {
-        if (i === 0) return t
-        const name = getParameterNameFromText(t)
-        const unscopeName = name.replace(`${scopeName}.`, '')
-        templateArgs.push(unscopeName)
-        const words = t.split(' ')
-        words[2] = words[2].replace(name, unscopeName)
-        return words.join(' ')
-      })
-      .map(t => `* ${t} \n`)
 
-    const text = `/**\n${template.join('')}*/\nfunction __func__${crypto.randomBytes(6).toString('hex')} (${templateArgs.join(', ')}) {}`
-    const { sourceStatement, declarationStatement } = this._modules.getStatementFromText(text)
-    const sourceParameters = sourceStatement.getStructure().parameters
-    const parameters = declarationStatement.getParameters()
-    doc = getJsDocStructure(declarationStatement)
-    doc = doc.tags.filter(t => t.tagName === 'param')[0]
-
-    return {
-      doc,
-      typeInfo: parseParameterType(parameters[0], doc),
-      parameters: parameters.slice(1).map((param, index) => this._parseParameter(param, index + 1, sourceParameters))
-    }
+    return u('Parameter', {
+      name: scopeName,
+      doc: {
+        description: getParameterDescriptionFromText(template[0]),
+        tags: []
+      },
+      ...getParameterTypeFromText(template[0])
+    }, template
+      .slice(1)
+      .map(t => {
+        return u('Parameter', {
+          name: getParameterNameFromText(t).replace(`${scopeName}.`, ''),
+          doc: {
+            description: getParameterDescriptionFromText(t),
+            tags: []
+          },
+          ...getParameterTypeFromText(t)
+        })
+      }))
   }
 }
 

@@ -85,7 +85,7 @@ const getType = (node, asArray = false) => {
   if (!type) return
   const arr = type.split('|').map(t => t.trim())
   if (asArray) return arr
-  return arr.join(' | ')
+  return arr.join(' | ').replace('=', '')
 }
 
 const getIsOptional = (node, type) => {
@@ -96,7 +96,7 @@ const getIsOptional = (node, type) => {
 
 const parseParameterType = (node, doc) => {
   let type = getType(node, true)
-  const isOptional = getIsOptional(node, type)
+  let isOptional = getIsOptional(node, type)
 
   type = type.filter(t => t !== 'null').join(' | ')
 
@@ -105,6 +105,10 @@ const parseParameterType = (node, doc) => {
   const defaultValue = doc.fullText.match(new RegExp(`\\}\\s\\[${doc.name}=(\\s*.*)\\]`, 'i'))
   if (defaultValue && defaultValue.length === 2) {
     return { valueType: type, isOptional: true, defaultValue: defaultValue[1] }
+  }
+
+  if (doc.fullText.includes(`} [${doc.name}]`) || (typeof node === 'string' && node.endsWith('='))) {
+    isOptional = true
   }
 
   return { valueType: type, isOptional }
@@ -118,6 +122,22 @@ const getParameterNameFromText = text => {
   return trim(name, '[]').split('=')[0].trim()
 }
 
+const getParameterTypeFromText = text => {
+  let type = text.split(' ')[1] || 'any'
+  type = trim(type, '{} ')
+
+  return parseParameterType(type, {
+    name: getParameterNameFromText(text),
+    fullText: text
+  })
+}
+
+const getParameterDescriptionFromText = text => {
+  const desc = text.split(' ').slice(3)
+  if (desc.length === 0) return ''
+  return desc.join(' ').trim(desc, '- \n')
+}
+
 module.exports = {
   parseTextTag,
   parseTags,
@@ -128,5 +148,7 @@ module.exports = {
   getType,
   parseParameterType,
   removeDocParams,
-  getParameterNameFromText
+  getParameterNameFromText,
+  getParameterTypeFromText,
+  getParameterDescriptionFromText
 }
