@@ -91,13 +91,23 @@ class TypeDefinitionParser {
     const st = node.getStructure()
     const source = this._currentModule.sourceFile.forEachDescendant(n => {
       if (getName(n) === st.name && getName(n.getParent()) === getName(node.getParent())) {
-        return n
+        if ([SyntaxKind.FunctionDeclaration, SyntaxKind.FunctionExpression, SyntaxKind.ArrowFunction].includes(n.getKind())) {
+          return n
+        }
+        // it's a VariableStatement, we need to keep looking inside for the FunctionExpression
+        return n.forEachDescendant(subN => {
+          if ([SyntaxKind.FunctionDeclaration, SyntaxKind.FunctionExpression, SyntaxKind.ArrowFunction].includes(subN.getKind())) {
+            return subN
+          }
+        })
       }
     })
+
+    const sourceStructure = source.getStructure()
     props.valueType = getType(node)
-    props.isGenerator = source.isGenerator()
-    props.isAsync = source.isAsync()
-    const children = node.getParameters().map((param, index) => this._parseParameter(param, index, source.getStructure().parameters))
+    props.isGenerator = sourceStructure.isGenerator
+    props.isAsync = sourceStructure.isAsync
+    const children = node.getParameters().map((param, index) => this._parseParameter(param, index, sourceStructure.parameters))
     return u(node.getKindName(), props, children)
   }
 
